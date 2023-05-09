@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        title: 'Archivo, sans-serif',
         sans: 'Inter, sans-serif',
       },
     },
