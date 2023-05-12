@@ -1,3 +1,4 @@
+'use client'
 import { EnvelopeSimple, Eye, EyeSlash, Lock, User } from 'phosphor-react'
 import { FormEvent, InputHTMLAttributes, useState } from 'react'
 
