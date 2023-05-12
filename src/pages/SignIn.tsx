@@ -1,12 +1,12 @@
 import Balance from 'react-wrap-balancer'
 
-import { Input } from '../components/form/Input'
 import { Header } from '../components/Header'
+import { FormController } from '../components/form/FormController'
 
-export function Login() {
+export function SignIn() {
   return (
     <>
-      <Header title="Login" linkTo="#" />
+      <Header />
 
       <div className="bg-gray-500 flex h-[calc(100vh-5rem)]">
         <div className="w-full h-full bg-[url('../assets/hero.png')] bg-no-repeat bg-cover flex items-end pl-28 pb-28">
@@ -33,34 +33,7 @@ export function Login() {
                 Faça seu login para começar uma experiência incrível.
               </Balance>
             </span>
-            <form action="#" className="flex flex-col gap-8">
-              <div className="flex flex-col gap-8">
-                <Input inputType="email" name="email" placeholder="E-mail" />
-                <Input
-                  inputType="password"
-                  name="password"
-                  placeholder="Senha"
-                />
-                <a
-                  href="#"
-                  className="text-blue-500 transition-colors hover:text-blue-600"
-                >
-                  Esqueci minha senha
-                </a>
-              </div>
-              <button className="w-full h-14 bg-blue-500 rounded-lg text-white font-title font-medium transition-colors hover:bg-blue-600">
-                Login
-              </button>
-              <span className="text-gray-500">
-                Não possui uma conta?{' '}
-                <a
-                  href="#"
-                  className="text-blue-500 transition-colors hover:text-blue-600"
-                >
-                  Criar conta
-                </a>
-              </span>
-            </form>
+            <FormController page="signin" />
           </div>
         </div>
       </div>

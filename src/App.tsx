@@ -1,9 +1,5 @@
-import { Login } from './pages/Login'
+import { Outlet } from 'react-router-dom'
 
 export function App() {
-  return (
-    <>
-      <Login />
-    </>
-  )
+  return <Outlet />
 }
