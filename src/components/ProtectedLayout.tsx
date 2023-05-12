@@ -1,6 +1,5 @@
 import { ReactNode, useContext } from 'react'
-
-import { AuthContext } from '../Contexts/AuthContext'
+import { AuthContext } from '../Contexts/AuthProvider'
 
 interface ProtectedLayoutProps {
   children: ReactNode | any
