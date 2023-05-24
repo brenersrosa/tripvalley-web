@@ -1,9 +1,22 @@
+import { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Balance from 'react-wrap-balancer'
 
 import { Header } from '../components/Header'
 import { FormController } from '../components/form/FormController'
+import { AuthContext } from '../contexts/AuthContext'
 
 export function SignIn() {
+  const { isAuthenticated } = useContext(AuthContext)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard')
+    }
+  }, [isAuthenticated, navigate])
+
   return (
     <>
       <Header />

@@ -1,17 +1,14 @@
-import { useNavigate } from 'react-router-dom'
-
 import { SignOut } from 'phosphor-react'
-import useAuthStore from '../Contexts/useAuthStore'
+import { useContext } from 'react'
 import logo from '../assets/logo-short.svg'
 
-export function Header() {
-  const { user, signOut } = useAuthStore()
+import { AuthContext } from '../contexts/AuthContext'
 
-  const navigate = useNavigate()
+export function Header() {
+  const { user, signOut } = useContext(AuthContext)
 
   function handleSignOut() {
     signOut()
-    navigate('/signin')
   }
 
   function getPageName() {

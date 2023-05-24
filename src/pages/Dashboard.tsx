@@ -1,8 +1,9 @@
-import useAuthStore from '../Contexts/useAuthStore'
+import { useContext } from 'react'
 import { Header } from '../components/Header'
+import { AuthContext } from '../contexts/AuthContext'
 
-export function DasdhBoard() {
-  const { user } = useAuthStore()
+export function Dashboard() {
+  const { user } = useContext(AuthContext)
 
   return (
     <>
