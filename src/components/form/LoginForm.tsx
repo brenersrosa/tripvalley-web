@@ -1,47 +1,45 @@
-import { FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-import useAuthStore from '../../Contexts/useAuthStore'
+import { AuthContext } from '../../contexts/AuthContext'
+import { signInSchema } from '../../schemas/user.schemas'
 
 import { Input } from './Input'
 
+interface SignInFormData {
+  email: string
+  password: string
+}
+
 export function LoginForm() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, handleSubmit, formState } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+  })
 
-  const { signIn } = useAuthStore()
+  const { errors } = formState
 
-  const navigate = useNavigate()
+  const { signIn } = useContext(AuthContext)
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-
-    const data = {
-      email,
-      password,
-    }
-
-    signIn(data)
-
-    navigate('/dashboard')
+  const handleSignIn: SubmitHandler<SignInFormData> = async (data) => {
+    await signIn(data)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col gap-8">
       <div className="flex flex-col gap-8">
         <Input
           inputType="email"
-          name="email"
           placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register('email')}
+          error={errors.email}
+          autoFocus
         />
         <Input
           inputType="password"
-          name="password"
           placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register('password')}
+          error={errors.password}
         />
         <a
           href="#"
