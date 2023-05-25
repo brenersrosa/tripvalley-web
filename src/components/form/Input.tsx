@@ -36,7 +36,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           },
         )}
       >
-        <div className="w-[70px] h-full flex items-center justify-center border-r-2 border-gray-100">
+        <div className="w-[70px] h-full flex items-center justify-center border-r-2 border-gray-100 bg-white rounded-l-lg">
           {inputType === 'user' && <User size={24} className="text-gray-500" />}
           {inputType === 'email' && (
             <EnvelopeSimple size={24} className="text-gray-500" />
@@ -46,7 +46,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           )}
         </div>
         <input
-          className="py-3 px-4 rounded text-sm text-gray-600 placeholder:text-zinc-500 focus:outline-none w-full"
+          className="py-3 px-4 rounded text-sm text-gray-600 placeholder:text-zinc-500 focus:outline-none w-full h-full rounded-lg bg-white"
           // value={inputValue}
           // onChange={(e) => setInputValue(e.target.value)}
           type={inputType === 'password' && showPassword ? 'text' : inputType}
