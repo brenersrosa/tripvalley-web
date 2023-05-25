@@ -46,7 +46,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           )}
         </div>
         <input
-          className="py-3 px-4 rounded text-sm text-gray-600 placeholder:text-zinc-500 focus:outline-none w-full h-full rounded-lg bg-white"
+          className="py-3 px-4 text-sm text-gray-600 placeholder:text-zinc-500 focus:outline-none w-full h-full rounded-lg bg-white"
           // value={inputValue}
           // onChange={(e) => setInputValue(e.target.value)}
           type={inputType === 'password' && showPassword ? 'text' : inputType}
