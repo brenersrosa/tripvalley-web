@@ -21,24 +21,28 @@ export function SignIn() {
     <>
       <Header />
 
-      <div className="bg-gray-500 flex h-[calc(100vh-5rem)]">
-        <div className="w-full h-full bg-[url('../assets/hero.png')] bg-no-repeat bg-cover flex items-end pl-28 pb-28">
-          <div className="max-w-md flex flex-col gap-4">
-            <h2 className="font-title font-bold leading-tight text-6xl text-gray-50 uppercase">
+      <div className="md:bg-gray-500 md:flex md:h-[calc(100vh-5rem)] pb-36 md:pb-0">
+        <div className="md:w-full md:h-full md:bg-[url('../assets/hero.png')] md:bg-no-repeat md:bg-cover md:brightness-95 md:flex md:items-end md:pl-28 md:pb-28">
+          <div className="md:max-w-md md:flex md:flex-col md:gap-4">
+            <h2 className="md:font-title md:font-bold md:leading-tight md:text-6xl md:text-gray-50 md:uppercase">
+              <div className='md:block hidden'>
               <Balance>Aproveite o mundo!</Balance>
+              </div>
             </h2>
-            <span className="text-gray-100 leading-relaxed">
+            <span className="md:text-gray-100 md:leading-relaxed">
+            <div className='md:block hidden'>
               <Balance>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
+              Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
               </Balance>
+              </div>     
             </span>
           </div>
         </div>
 
-        <div className="w-full h-full bg-zinc-50 flex items-center">
-          <div className="max-w-24 flex flex-col gap-8 mx-auto">
-            <h3 className="font-title font-semibold text-4xl leading-tight">
+        <div className="md:w-full md:h-full mt-5 md:mt-0 bg-zinc-50 flex items-center w-11/12 mx-auto border border-gray-300 rounded-xl md:border-none md:rounded-none">
+          <div className="md:max-w-24 flex flex-col gap-6 mt-5 mb-5 md:mt-none md:mb-none md:gap-8 mx-auto">
+            <h3 className="font-title font-semibold text-3xl md:text-4xl leading-tight">
               <Balance>Estamos quase lá!</Balance>
             </h3>
             <span className="font-title leading-relaxed text-gray-500">
