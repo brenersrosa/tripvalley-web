@@ -30,13 +30,13 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
     <div className="flex flex-col gap-2">
       <div
         className={clsx(
-          'h-16 flex items-center border-[1px] border-gray-100 rounded-lg relative focus-within:border-blue-500',
+          'h-16 flex items-center border-[1px] border-gray-300 rounded-lg relative focus-within:border-blue-500',
           {
             'focus-within:border-red-500': error?.message,
           },
         )}
       >
-        <div className="w-[70px] h-full flex items-center justify-center border-r-2 border-gray-100 bg-white rounded-l-lg">
+        <div className="w-[70px] h-full flex items-center justify-center border-r border-gray-300 bg-gray-200 rounded-l-lg">
           {inputType === 'user' && <User size={24} className="text-gray-500" />}
           {inputType === 'email' && (
             <EnvelopeSimple size={24} className="text-gray-500" />
@@ -65,7 +65,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       </div>
 
       {!!error && <span className="text-red-500">{error.message}</span>}
+
     </div>
+
   )
 }
 
