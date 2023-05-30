@@ -29,7 +29,7 @@ export function Header() {
   return (
     <div className="flex items-center justify-between w-full h-20">
       <img src={logo} alt="TRIPvalley logo" />
-      <div className="h-full flex-1 flex items-center justify-between px-28 border-b-2 border border-gray-100">
+      <div className="h-full flex-1 flex items-center justify-between shadow-md md:border-b-2 px-5 md:px-28">
         <span className="font-title font-semibold text-xl">
           {getPageName()}
         </span>
