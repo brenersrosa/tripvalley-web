@@ -36,7 +36,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           },
         )}
       >
-        <div className="w-[70px] h-full flex items-center justify-center border-r border-gray-300 bg-gray-200 rounded-l-lg">
+        <div className="w-[70px] h-full flex items-center justify-center border-r border-gray-200 bg-gray-100 rounded-l-lg">
           {inputType === 'user' && <User size={24} className="text-gray-500" />}
           {inputType === 'email' && (
             <EnvelopeSimple size={24} className="text-gray-500" />
@@ -55,19 +55,17 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         />
 
         {inputType === 'password' && (
-          <button
+          <a
             onClick={handleShowPassword}
-            className="absolute right-6 text-gray-500"
+            className="absolute right-6 text-gray-500 cursor-pointer hover:text-gray-600 transition-colors"
           >
             {showPassword ? <EyeSlash size={24} /> : <Eye size={24} />}
-          </button>
+          </a>
         )}
       </div>
 
       {!!error && <span className="text-red-500">{error.message}</span>}
-
     </div>
-
   )
 }
 
