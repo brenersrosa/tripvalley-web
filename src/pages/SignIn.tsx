@@ -6,6 +6,8 @@ import { Header } from '../components/Header'
 import { FormController } from '../components/form/FormController'
 import { AuthContext } from '../contexts/AuthContext'
 
+import logo from '../assets/logo-short.svg'
+
 export function SignIn() {
   const { isAuthenticated } = useContext(AuthContext)
 
@@ -13,29 +15,36 @@ export function SignIn() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard')
+      navigate('/accommodations')
     }
   }, [isAuthenticated, navigate])
 
   return (
     <>
-      <Header />
+      <div className="flex">
+        <img
+          src={logo}
+          alt="TRIPvalley logo"
+          className="w-20 h-20 bg-blue-500"
+        />
+        <Header title="Login" />
+      </div>
 
       <div className="md:bg-gray-500 md:flex md:h-[calc(100vh-5rem)] pb-10 pt-10 md:pb-0 md:pt-0 ">
         <div className="md:w-full md:h-full md:bg-[url('../assets/hero.png')] md:bg-no-repeat md:bg-cover md:brightness-95 md:flex md:items-end md:pl-28 md:pb-28">
           <div className="md:max-w-md md:flex md:flex-col md:gap-4">
             <h2 className="md:font-title md:font-bold md:leading-tight md:text-6xl md:text-gray-50 md:uppercase">
-              <div className='md:block hidden'>
-              <Balance>Aproveite o mundo!</Balance>
+              <div className="md:block hidden">
+                <Balance>Aproveite o mundo!</Balance>
               </div>
             </h2>
             <span className="md:text-gray-100 md:leading-relaxed">
-            <div className='md:block hidden'>
-              <Balance>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </Balance>
-              </div>     
+              <div className="md:block hidden">
+                <Balance>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry.
+                </Balance>
+              </div>
             </span>
           </div>
         </div>

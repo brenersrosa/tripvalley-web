@@ -86,7 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
 
-        navigate('/dashboard')
+        navigate('/accommodations')
       })
       .catch((error) => {
         toast.error(error.response.data.message, {
