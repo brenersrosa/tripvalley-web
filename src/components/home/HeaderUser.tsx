@@ -45,18 +45,18 @@ export function HeaderUser() {
                 </DropdownMenu>
             </div>
             <div className="hidden md:flex items-center">
-                <Link to="#" className="text-gray-50 px-4 py-2 font-semibold">
+                <a href='#' className="text-gray-50 px-4 py-2 font-semibold">
                     Vantagens
-                </Link>
-                <Link to="" className="text-gray-50 px-4 py-2 font-semibold">
+                </a>
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
                     Pacotes
-                </Link>
-                <Link to="#" className="text-gray-50 px-4 py-2 font-semibold">
+                </a>
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
                     Serviços
-                </Link>
-                <Link to="#" className="text-gray-50 px-4 py-2 font-semibold">
+                </a>
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
                     Contatos
-                </Link>
+                </a>
                 <Link to="/signin" className="px-12 py-3 ml-4 rounded-lg bg-blue-500 text-gray-50 font-semibold hover:bg-blue-600 transition">
                     Entrar
                 </Link>
