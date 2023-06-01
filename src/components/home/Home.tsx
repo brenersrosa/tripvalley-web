@@ -5,7 +5,7 @@ import { Button } from '../Button'
 
 import wave from '../../assets/wave.svg'
 
-export function Hero() {
+export function Top() {
   return (
     <div className="w-full">
       <div className="flex h-screen w-full items-center bg-home bg-cover bg-no-repeat px-40">
