@@ -30,8 +30,8 @@ export function SignIn() {
         <Header title="Login" />
       </div>
 
-      <div className="pb-10 pt-10 md:flex md:h-[calc(100vh-5rem)] md:bg-gray-500 md:pb-0 md:pt-0 ">
-        <div className="md:flex md:h-full md:w-full md:items-end md:bg-[url('../assets/hero.png')] md:bg-cover md:bg-no-repeat md:pb-28 md:pl-28 md:brightness-95">
+      <div className="md:flex md:h-[calc(100vh-5rem)] md:pb-0 md:pt-0 ">
+        <div className="flex h-full w-full items-end bg-[url('../assets/hero.png')] bg-cover bg-no-repeat pb-52 md:pb-28 pl-28 brightness-95 shadow-xl md:shadow-none">
           <div className="md:flex md:max-w-md md:flex-col md:gap-4">
             <h2 className="md:font-title md:text-6xl md:font-bold md:uppercase md:leading-tight md:text-gray-50">
               <div className="hidden md:block">
@@ -49,7 +49,7 @@ export function SignIn() {
           </div>
         </div>
 
-        <div className="mx-auto mt-5 flex w-[95%] items-center rounded-xl border border-gray-200 bg-zinc-50 md:mt-0 md:h-full md:w-full md:rounded-none md:border-none">
+        <div className="mx-auto mt-5 flex items-center md:mt-0 md:h-full md:w-full">
           <div className="md:max-w-24 md:mt-none md:mb-none mx-auto mb-5 mt-5 flex flex-col gap-6 md:gap-8">
             <h3 className="text-center font-title text-3xl font-semibold leading-tight md:text-left md:text-4xl">
               <Balance>Estamos quase lá!</Balance>
