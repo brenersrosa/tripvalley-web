@@ -13,23 +13,3 @@
   background-color: #3b82f6; /* Define a cor da barra de rolagem */
   border-radius: 5px; /* Define o estilo arredondado */
 }
-
-
-@keyframes toast-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes toast-out-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-

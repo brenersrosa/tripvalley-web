@@ -25,21 +25,21 @@ export function SignIn() {
         <img
           src={logo}
           alt="TRIPvalley logo"
-          className="w-20 h-20 bg-blue-500"
+          className="h-20 w-20 bg-blue-500"
         />
         <Header title="Login" />
       </div>
 
-      <div className="md:bg-gray-500 md:flex md:h-[calc(100vh-5rem)] pb-10 pt-10 md:pb-0 md:pt-0 ">
-        <div className="md:w-full md:h-full md:bg-[url('../assets/hero.png')] md:bg-no-repeat md:bg-cover md:brightness-95 md:flex md:items-end md:pl-28 md:pb-28">
-          <div className="md:max-w-md md:flex md:flex-col md:gap-4">
-            <h2 className="md:font-title md:font-bold md:leading-tight md:text-6xl md:text-gray-50 md:uppercase">
-              <div className="md:block hidden">
+      <div className="pb-10 pt-10 md:flex md:h-[calc(100vh-5rem)] md:bg-gray-500 md:pb-0 md:pt-0 ">
+        <div className="md:flex md:h-full md:w-full md:items-end md:bg-[url('../assets/hero.png')] md:bg-cover md:bg-no-repeat md:pb-28 md:pl-28 md:brightness-95">
+          <div className="md:flex md:max-w-md md:flex-col md:gap-4">
+            <h2 className="md:font-title md:text-6xl md:font-bold md:uppercase md:leading-tight md:text-gray-50">
+              <div className="hidden md:block">
                 <Balance>Aproveite o mundo!</Balance>
               </div>
             </h2>
-            <span className="md:text-gray-100 md:leading-relaxed">
-              <div className="md:block hidden">
+            <span className="md:leading-relaxed md:text-gray-100">
+              <div className="hidden md:block">
                 <Balance>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry.
@@ -49,12 +49,12 @@ export function SignIn() {
           </div>
         </div>
 
-        <div className="md:w-full md:h-full mt-5 md:mt-0 bg-zinc-50 flex items-center w-[95%] mx-auto border border-gray-200 rounded-xl md:border-none md:rounded-none">
-          <div className="md:max-w-24 flex flex-col gap-6 mt-5 mb-5 md:mt-none md:mb-none md:gap-8 mx-auto">
-            <h3 className="font-title font-semibold text-3xl md:text-4xl text-center md:text-left leading-tight">
+        <div className="mx-auto mt-5 flex w-[95%] items-center rounded-xl border border-gray-200 bg-zinc-50 md:mt-0 md:h-full md:w-full md:rounded-none md:border-none">
+          <div className="md:max-w-24 md:mt-none md:mb-none mx-auto mb-5 mt-5 flex flex-col gap-6 md:gap-8">
+            <h3 className="text-center font-title text-3xl font-semibold leading-tight md:text-left md:text-4xl">
               <Balance>Estamos quase lá!</Balance>
             </h3>
-            <span className="font-title leading-relaxed text-center text-gray-500">
+            <span className="text-center font-title leading-relaxed text-gray-500">
               <Balance>
                 Faça seu login para começar uma experiência incrível.
               </Balance>
