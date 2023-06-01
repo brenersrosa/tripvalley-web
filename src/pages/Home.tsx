@@ -1,13 +1,10 @@
-import { Link } from 'react-router-dom'
-
+import { Hero } from '../components/home/Hero'
+import { HeaderUser } from "../components/home/HeaderUser";
 export function Home() {
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center gap-4">
-      <h1>home</h1>
-
-      <Link to="/signin" className="p-4 rounded bg-blue-500 text-white">
-        SignIn
-      </Link>
+    <div className="flex flex-col items-center justify-center gap-4 ">
+      <HeaderUser></HeaderUser>
+      <Hero></Hero>
     </div>
   )
 }
