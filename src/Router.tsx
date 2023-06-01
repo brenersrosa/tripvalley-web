@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { Home } from './pages/Home'
-import { SignIn } from './pages/SignIn'
 import { Accommodations } from './pages/accommodations'
 import { NewAccommodation } from './pages/accommodations/new'
+import { Home } from './pages/home'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
+import { SignIn } from './pages/signIn'
 
 export function Router() {
   return (

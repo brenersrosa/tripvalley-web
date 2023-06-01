@@ -50,7 +50,7 @@ export function LoginForm() {
       </div>
       <button
         type="submit"
-        className="w-full h-14 bg-blue-500 rounded-lg text-white font-title font-medium transition-colors hover:bg-blue-600"
+        className="h-14 w-full rounded-lg bg-blue-500 font-title font-medium text-white transition-colors hover:bg-blue-600"
       >
         Login
       </button>
