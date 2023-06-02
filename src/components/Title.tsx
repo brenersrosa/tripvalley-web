@@ -1,12 +1,12 @@
-type Text = {
+interface titleProps {
   title: string
 }
 
-export function Title({ title }: Text) {
+export function Title({ title }: titleProps) {
   return (
-    <div className="hidden pb-14 md:flex">
-      <span className="ml-10 mr-3 rounded-r-md border-l-8 border-r-2 border-blue-500 sm:ml-0"></span>
-      <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
+    <div className="flex items-center gap-4">
+      <div className="h-12 w-2 rounded-r-lg bg-blue-500"></div>
+      <h2 className="font-title text-4xl font-bold text-gray-800">{title}</h2>
     </div>
   )
 }
