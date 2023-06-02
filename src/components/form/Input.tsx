@@ -44,12 +44,12 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             <EnvelopeSimple size={24} className="text-gray-500" />
           )}
           {inputType === 'password' && (
-            <Lock size={24} className="text-gray-500"/>
+            <Lock size={24} className="text-gray-500" />
           )}
           {icon}
         </div>
         <input
-          className="h-full w-full rounded-lg bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none"
+          className="h-full w-full rounded-r-lg bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none"
           // value={inputValue}
           // onChange={(e) => setInputValue(e.target.value)}
           type={inputType === 'password' && showPassword ? 'text' : inputType}

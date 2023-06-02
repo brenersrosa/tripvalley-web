@@ -9,6 +9,7 @@ export default {
       },
       backgroundImage: {
         home: "url('/src/assets/background/home.png')",
+        locations: "url('/src/assets/background/locations.png')",
         notFound: "url('/src/assets/background/world.svg')",
       },
     },

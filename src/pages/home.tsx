@@ -1,10 +1,11 @@
-import Newsletter from '../assets/background/newsletter.svg'
+import { CaretRight } from 'phosphor-react'
+import { Button } from '../components/Button'
 import { Carousel } from '../components/Carousel'
 import { Title } from '../components/Title'
 import { Input } from '../components/form/Input'
+import { Feedback } from '../components/home/Feedback'
 import { HeaderUser } from '../components/home/HeaderUser'
 import { Hero } from '../components/home/Hero'
-import { Feedback } from '../components/home/feedbackCards'
 
 export function Home() {
   return (
@@ -41,18 +42,18 @@ export function Home() {
         </div>
       </div>
 
-      <div className="relative w-full">
-        <img
-          src={Newsletter}
-          alt="foto de fundo com coqueiros e uma praia"
-          className="w-full"
-        />
-        <div className="absolute left-0 top-2/4 w-full px-40 text-white">
-          <h2 className="text-sm font-bold">Inscreva-se e fique atualizado!</h2>
-          <p className="text-xs font-normal">
-            Receba atualizações e as melhores ofertas no seu e-mail.
-          </p>
-          <Input inputType="email" placeholder="Insira seu melhor e-mail" />
+      <div className="flex flex-col gap-12 bg-locations bg-cover bg-no-repeat px-40 py-24">
+        <h3 className="font-title text-6xl font-bold text-gray-50">
+          Inscreva-se e fique atualizado
+        </h3>
+        <span className="text-xl text-gray-100">
+          Receba todas atualizações e as melhores ofertas em seu e-mail.
+        </span>
+        <div className="grid grid-cols-3 gap-6">
+          <div className="col-span-2">
+            <Input inputType="email" placeholder="Insira seu melhor e-mail" />
+          </div>
+          <Button icon={<CaretRight size={24} />} title="Inscreva-se" />
         </div>
       </div>
     </div>
