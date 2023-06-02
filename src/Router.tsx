@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { NotFound } from './pages/404'
 import { Accommodations } from './pages/accommodations'
 import { NewAccommodation } from './pages/accommodations/new'
 import { Home } from './pages/home'
@@ -45,6 +46,7 @@ export function Router() {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

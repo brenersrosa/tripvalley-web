@@ -8,7 +8,8 @@ export default {
         sans: 'Inter, sans-serif',
       },
       backgroundImage: {
-        home: "url('./src/assets/background/home.png')",
+        home: "url('/src/assets/background/home.png')",
+        notFound: "url('/src/assets/background/world.svg')",
       },
     },
   },

@@ -1,11 +1,10 @@
-import { Hero } from "../components/home/Hero";
-import { HeaderUser } from "../components/home/HeaderUser";
-import { Title } from "../components/Title";
-import { Carousel } from "../components/Carousel";
-import { Feedback } from "../components/home/feedbackCards";
-import { Input } from "../components/form/Input";
-import Newsletter from "../assets/background/newsletter.svg";
-
+import Newsletter from '../assets/background/newsletter.svg'
+import { Carousel } from '../components/Carousel'
+import { Title } from '../components/Title'
+import { Input } from '../components/form/Input'
+import { HeaderUser } from '../components/home/HeaderUser'
+import { Hero } from '../components/home/Hero'
+import { Feedback } from '../components/home/feedbackCards'
 
 export function Home() {
   return (
@@ -77,5 +76,5 @@ export function Home() {
         <div className="h-200" />
       </div>
     </>
-  );
+  )
 }
