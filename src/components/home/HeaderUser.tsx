@@ -10,7 +10,7 @@ export function HeaderUser() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
     return (
-        <nav className="fixed h-[40px] md:h-[90px] md:px-[100px] px-5 top-0 right-0  w-full border-b md:border-b-0 shadow-lg bg-black bg-opacity-60 flex items-center justify-between text-gray-50 z-10">
+        <nav className="fixed h-[40px] md:h-[90px] md:px-40 px-5 top-0 right-0  w-full border-b md:border-b-0 shadow-lg bg-black bg-opacity-60 flex items-center justify-between text-gray-50 z-10">
             <div className="flex items-center select-none">
                 <h1 className="text-xl md:text-4xl font-bold text-blue-500">TRIP<span className='text-white text-base md:text-2xl'>valley</span></h1>
             </div>
@@ -43,17 +43,17 @@ export function HeaderUser() {
                     )}
                 </DropdownMenu>
             </div>
-            <div className="hidden md:flex items-center">
-                <a href='#' className="text-gray-50 px-4 py-2 font-semibold">
+            <div className="hidden md:flex items-center ">
+                <a href='#' className="text-gray-50 px-4 py-2 font-semibold hover:text-blue-500 transition">
                     Vantagens
                 </a>
-                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold hover:text-blue-500 transition">
                     Pacotes
                 </a>
-                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold hover:text-blue-500 transition">
                     Serviços
                 </a>
-                <a href="#" className="text-gray-50 px-4 py-2 font-semibold">
+                <a href="#" className="text-gray-50 px-4 py-2 font-semibold hover:text-blue-500 transition">
                     Contatos
                 </a>
                 <Link to="/signin" className="px-12 py-3 ml-4 rounded-lg bg-blue-500 text-gray-50 font-semibold hover:bg-blue-600 transition">

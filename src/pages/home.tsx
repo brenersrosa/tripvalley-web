@@ -22,14 +22,14 @@ export function Home() {
         <div className="my-10">
           <div className="flex justify-center">
             <img
-              className="w-full"
+              className="w-11/12"
               src="/src/assets/background/backgroundPin.png"
               alt="imagem de uma van na esquerda e um caminho tracejado simulando uma rota e no final uma bolinha azul sinalizando o destino final"
             />
           </div>
         </div>
 
-        <div className="my-10">
+        <div className="my-10 px-40">
           <Title title="Feedbacks" />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <Feedback
@@ -59,7 +59,7 @@ export function Home() {
             alt="foto de fundo com coqueiros e uma praia"
             className="w-full"
           />
-          <div className="absolute left-0 top-0 w-full p-4 text-white">
+          <div className="absolute left-0 top-2/4 w-full px-40 text-white">
             <h2 className="text-sm font-bold">
               Inscreva-se e fique atualizado!
             </h2>
