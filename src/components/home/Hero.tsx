@@ -8,7 +8,7 @@ import wave from '../../assets/wave.svg'
 export function Hero() {
   return (
     <div className="w-full">
-      <div className="flex h-screen w-full items-center bg-home bg-cover bg-no-repeat px-40">
+      <div className="flex h-screen w-full items-center bg-home bg-cover bg-no-repeat px-40 brightness-90">
         <div className="flex max-w-lg flex-col gap-8">
           <h1 className="font-title text-5xl font-bold leading-tight text-gray-50">
             <Balancer>
@@ -28,7 +28,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="-translate-y-1/2">
+      <div className="-translate-y-1/4">
         <div className="mx-40 flex gap-11 rounded-2xl bg-white p-10 shadow-2xl">
           <div className="flex flex-col items-center justify-center gap-2">
             <MagnifyingGlass size={40} className="text-blue-500" />
@@ -73,5 +73,5 @@ export function Hero() {
         />
       </div>
     </div>
-  )
+  );
 }
