@@ -7,6 +7,9 @@ export default {
         title: 'Archivo, sans-serif',
         sans: 'Inter, sans-serif',
       },
+      backgroundImage: {
+        home: "url('./src/assets/background/home.png')",
+      },
     },
   },
   plugins: [],
