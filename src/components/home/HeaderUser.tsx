@@ -1,9 +1,4 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu'
+import {DropdownMenu,DropdownMenuContent, DropdownMenuItem,DropdownMenuTrigger} from '@radix-ui/react-dropdown-menu'
 import { Handbag, List, Package, Phone, ThumbsUp } from 'phosphor-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -15,7 +10,7 @@ export function HeaderUser() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
     return (
-        <nav className="fixed h-[40px] md:h-[90px] px-[100px] top-0 left-0 w-full bg-black bg-opacity-60 flex items-center justify-between text-gray-50 z-10">
+        <nav className="fixed h-[40px] md:h-[90px] md:px-[100px] px-5 top-0 right-0  w-full border-b md:border-b-0 shadow-lg bg-black bg-opacity-60 flex items-center justify-between text-gray-50 z-10">
             <div className="flex items-center select-none">
                 <h1 className="text-xl md:text-4xl font-bold text-blue-500">TRIP<span className='text-white text-base md:text-2xl'>valley</span></h1>
             </div>

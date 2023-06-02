@@ -11,7 +11,7 @@ export function Carousel() {
         slidesToScroll: 2,
     };
     return (
-            <Slider className="w-[1100px]" {...settings}>
+            <Slider className="hidden md:block w-[1100px]" {...settings}>
                 <div className='text-center'>
                     <img src="src/assets/carousel/image-2.png" alt="" />
                     <h3 className="text-gray-800 font-semibold text-lg mb-1 mt-3">Circuito religioso</h3>

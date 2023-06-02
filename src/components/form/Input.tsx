@@ -44,7 +44,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             <EnvelopeSimple size={24} className="text-gray-500" />
           )}
           {inputType === 'password' && (
-            <Lock size={24} className="text-gray-500" />
+            <Lock size={24} className="text-gray-500"/>
           )}
           {icon}
         </div>

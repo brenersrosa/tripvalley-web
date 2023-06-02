@@ -1,12 +1,12 @@
-import { MagnifyingGlass } from 'phosphor-react'
-import { Link } from 'react-router-dom'
+import { MagnifyingGlass } from "phosphor-react";
+import { Link } from "react-router-dom";
 
-export function Hero(): JSX.Element {
+export function Hero() {
   return (
     <div className="z-0 hidden select-none md:block lg:block">
       <div className="brightness-90 filter">
         <img
-          className="h-min object-fill lg:w-full"
+          className="h-min object-fill w-full"
           src="src/assets/background/backgroundHome.png"
           alt=""
         />
@@ -15,7 +15,7 @@ export function Hero(): JSX.Element {
         <div className="relative left-10 top-36 z-10 flex flex-col gap-2 px-[60px] font-bold text-white md:max-w-lg md:text-2xl lg:text-5xl">
           <div className="space-y-1">
             <h1 className="w-auto text-gray-50">
-              Planeje sua próxima{' '}
+              Planeje sua próxima{" "}
               <span className="text-yellow-400">viagem</span>
             </h1>
             <h1>de maneira simples e fácil</h1>
@@ -35,16 +35,8 @@ export function Hero(): JSX.Element {
           </div>
         </div>
       </div>
-
-      <div className="relative bottom-24 z-20 flex w-auto select-none items-center justify-center">
-        <img
-          className="object-fill"
-          src="src/assets/informativeImages/infoHome.png"
-          alt=""
-        />
-      </div>
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
