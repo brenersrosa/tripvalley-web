@@ -1,34 +1,28 @@
-import { Quotes } from "phosphor-react";
+import { Quotes } from 'phosphor-react'
 
-type Text = {
-    titleName: string
-    desc: string
-    city: string
-    image: string
+interface feedbackCardsProps {
+  feedback: string
+  name: string
+  city: string
+  image: string
 }
 
-export function Feedback({titleName, desc, city, image}:Text) {
-    return (
-        <div className="hidden md:block select-none">
-            <div className="w-[365px] h-max flex flex-col mx-auto border-2 border-gray-300 py-5 px-5 rounded-md mb-10">
-                <div className="my-3">
-                <Quotes className="text-gray-500" size={42} weight="light" />
-                </div>
-                <div className="mb-5 max-w-[370px]">
-                    <p className="text-gray-700 font-normal text-sm lg:text-base ">{desc}</p>
-                </div>
-                <hr className="border-gray-400 rounded-full" />
-                <div className="flex flex-row ml-3 items-center gap-3 mt-5">
-                    <div>
-                        <img className="rounded-full w-16 lg:w-20" src={image} alt="" />
-                    </div>
-                    <div>
-                        <h2 className="lg:text-2xl text-xl font-bold text-gray-800 mb-2">{titleName}</h2>
-                        <p className="lg:text-base text-sm text-gray-500">{city}</p>
-                    </div>
-                </div>
-            </div>
+export function Feedback({ feedback, name, city, image }: feedbackCardsProps) {
+  return (
+    <div className="flex flex-col gap-6 rounded-lg border-[1px] border-gray-300 bg-white p-8">
+      <Quotes className="text-gray-300" size={80} weight="fill" />
+      <p className="leading-relaxed text-gray-700">{feedback}</p>
+      <hr className="rounded-full border-gray-400" />
+      <div className="flex flex-row items-center gap-4">
+        <img className="w-16 rounded-full" src={image} alt="" />
+        <div className="flex flex-col gap-2">
+          <h2 className="font-title text-2xl font-bold text-gray-800 lg:text-2xl">
+            {name}
+          </h2>
+          <p className="text-sm text-gray-600 lg:text-base">{city}</p>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
-export default Feedback;
+export default Feedback
