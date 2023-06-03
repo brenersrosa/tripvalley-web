@@ -10,35 +10,35 @@ const sliderData = [
   {
     id: 1,
     title: 'Circuito Religioso',
-    imagePath: 'src/assets/carousel/image-2.png',
+    imagePath: '../src/assets/carousel/image-2.svg',
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
     id: 2,
     title: 'Vale histórico',
-    imagePath: 'src/assets/carousel/image-2.png',
+    imagePath: 'src/assets/carousel/image-1.svg',
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
     id: 3,
     title: 'Serra da Mantiqueira',
-    imagePath: 'src/assets/carousel/image-2.png',
+    imagePath: 'src/assets/carousel/image-4.svg',
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
     id: 4,
     title: 'Rios do Vale',
-    imagePath: 'src/assets/carousel/image-2.png',
+    imagePath: 'src/assets/carousel/image-2.svg',
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
     id: 5,
     title: 'Litoral Norte',
-    imagePath: 'src/assets/carousel/image-2.png',
+    imagePath: 'src/assets/carousel/image-3.svg',
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
@@ -64,7 +64,7 @@ export function Carousel() {
           className="w-full items-center justify-center pr-6 text-center"
         >
           <img
-            src="src/assets/carousel/image-2.png"
+            src={category.imagePath}
             alt=""
             className="w-full rounded-lg border-[1px] border-gray-300"
           />
@@ -72,8 +72,7 @@ export function Carousel() {
             {category.title}
           </h3>
           <p className="w-full px-2 leading-relaxed text-gray-700">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            {category.description}
           </p>
         </div>
       ))}

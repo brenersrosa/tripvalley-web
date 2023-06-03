@@ -9,7 +9,7 @@ interface feedbackCardsProps {
 
 export function Feedback({ feedback, name, city, image }: feedbackCardsProps) {
   return (
-    <div className="flex flex-col gap-6 rounded-lg border-[1px] border-gray-300 bg-white p-8">
+    <div className="flex flex-col gap-3 rounded-lg border-[1px] border-gray-300 bg-white p-7">
       <Quotes className="text-gray-300" size={80} weight="fill" />
       <p className="leading-relaxed text-gray-700">{feedback}</p>
       <hr className="rounded-full border-gray-400" />
@@ -25,4 +25,3 @@ export function Feedback({ feedback, name, city, image }: feedbackCardsProps) {
     </div>
   )
 }
-export default Feedback
