@@ -6,6 +6,7 @@ import { Input } from '../components/form/Input'
 import { Feedback } from '../components/home/Feedback'
 import { HeaderUser } from '../components/home/HeaderUser'
 import { Hero } from '../components/home/Hero'
+import { Footer } from '../components/Footer'
 
 export function Home() {
   return (
@@ -56,6 +57,7 @@ export function Home() {
           <Button icon={<CaretRight size={24} />} title="Inscreva-se" />
         </div>
       </div>
+      <Footer></Footer>
     </div>
   )
 }

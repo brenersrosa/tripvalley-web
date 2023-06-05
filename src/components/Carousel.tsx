@@ -42,7 +42,6 @@ const sliderData = [
     description:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
-  
 ]
 
 export function Carousel() {
@@ -57,21 +56,27 @@ export function Carousel() {
     ),
     responsive: [
       {
-        breakpoint: 768, // Defina o ponto de interrupção para dispositivos móveis (exemplo: 768px)
+        breakpoint: 1024, // Defina o ponto de interrupção para dispositivos desktop (exemplo: 1024px)
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768, // Defina o ponto de interrupção para tablets (exemplo: 768px)
         settings: {
           arrows: false,
-          slidesToShow: 1, // Altere o número de slides a serem exibidos em dispositivos móveis
+          slidesToShow: 1,
         },
       },
     ],
-  };
+  }
 
   return (
     <Slider className="flex w-full" {...settings}>
       {sliderData.map((category) => (
         <div
           key={category.id}
-          className="w-full items-center justify-center pr-2 md:pr-6 text-center"
+          className="w-full items-center justify-center pr-2 text-center md:pr-6"
         >
           <img
             src={category.imagePath}

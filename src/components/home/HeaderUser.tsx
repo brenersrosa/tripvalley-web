@@ -15,7 +15,7 @@ export function HeaderUser() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
   return (
-    <nav className="fixed right-0 top-0 z-10 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-40">
+    <nav className="fixed right-0 top-0 z-10 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-10 lg:px-40">
       <div className="flex select-none items-center">
         <h1 className="text-xl font-bold text-blue-500 md:text-4xl">
           TRIP<span className="text-base text-white md:text-2xl">valley</span>
