@@ -31,7 +31,7 @@ export function SignIn() {
       </div>
 
       <div className="md:flex md:h-[calc(100vh-5rem)] md:pb-0 md:pt-0 ">
-        <div className="flex h-full w-full items-end bg-[url('../assets/hero.png')] bg-cover bg-no-repeat pb-52 pl-28 shadow-xl brightness-95 md:pb-28 md:shadow-none">
+        <div className="flex h-full w-full items-end bg-[url('../assets/hero.svg')] bg-cover bg-no-repeat pb-52 pl-28 shadow-xl brightness-95 md:pb-28 md:shadow-none">
           <div className="md:flex md:max-w-md md:flex-col md:gap-4">
             <h2 className="md:font-title md:text-6xl md:font-bold md:uppercase md:leading-tight md:text-gray-50">
               <div className="hidden md:block">
