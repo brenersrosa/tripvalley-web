@@ -192,7 +192,7 @@ export function Packages() {
                                     {item.itineraries.map((itinerary, i) => (
                                       <div
                                         key={`${itinerary}-${i}`}
-                                        className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200 bg-white p-1 text-center text-xs text-gray-600"
+                                        className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200 bg-white p-1 text-center text-sm text-gray-600"
                                       >
                                         {itinerary.itinerary.accommodation.city}
                                       </div>
