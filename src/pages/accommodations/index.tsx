@@ -1,6 +1,7 @@
 import { Barricade, Binoculars, MagnifyingGlass, Plus } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Balancer } from 'react-wrap-balancer'
 
 import { api } from '../../lib/api'
 
@@ -46,20 +47,13 @@ export function Accommodations() {
   }, [])
 
   useEffect(() => {
-    api.get('/accommodations').then((response) => {
-      const accommodations = response.data
-      setCities(
-        Array.from(
-          new Set(
-            accommodations.map(
-              (accommodation: Accommodation) => accommodation.city,
-            ),
-          ),
-        ),
-      )
-      setIsLoading(false)
-    })
-  }, [])
+    const result = Array.from(
+      new Set(accommodations.map((accommodation) => accommodation.city)),
+    )
+    setIsLoading(false)
+
+    setCities(result)
+  }, [accommodations])
 
   const filteredAccommodations = accommodations.filter((accommodation) => {
     const isSearchMatch = accommodation.name
@@ -127,15 +121,17 @@ export function Accommodations() {
                   <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                     <Barricade size={40} className="text-gray-800" />
                     <span className="max-w-xl text-center leading-relaxed text-gray-600">
-                      Ops! Parece que ainda não temos hospedagens cadastradas.
-                      Que tal começar a{' '}
-                      <a
-                        className="cursor-pointer font-medium text-blue-500 transition-colors hover:text-blue-600"
-                        onClick={() => navigate('/accommodations/new')}
-                      >
-                        cadastrar hospedagens
-                      </a>{' '}
-                      para oferecer aos seus clientes?
+                      <Balancer>
+                        Ops! Parece que ainda não temos hospedagens cadastradas.
+                        Que tal começar a{' '}
+                        <a
+                          className="cursor-pointer font-medium text-blue-500 transition-colors hover:text-blue-600"
+                          onClick={() => navigate('/accommodations/new')}
+                        >
+                          cadastrar hospedagens
+                        </a>{' '}
+                        para oferecer aos seus clientes?
+                      </Balancer>
                     </span>
                   </div>
                 ) : (
@@ -159,8 +155,10 @@ export function Accommodations() {
                       <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                         <Binoculars size={40} className="text-gray-800" />
                         <span className="max-w-xl text-center leading-relaxed text-gray-600">
-                          Infelizmente, não encontramos resultados
-                          correspondentes à sua pesquisa.
+                          <Balancer>
+                            Infelizmente, não encontramos resultados
+                            correspondentes à sua pesquisa.
+                          </Balancer>
                         </span>
                       </div>
                     )}
