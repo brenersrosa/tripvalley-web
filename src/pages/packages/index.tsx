@@ -184,10 +184,10 @@ export function Packages() {
                           <tbody>
                             {filteredPackages.map((item) => (
                               <tr key={item.id}>
-                                <td className="line-clamp-1 border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 text-sm leading-relaxed">
+                                <td className="line-clamp-1 border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
                                   {item.name}
                                 </td>
-                                <td className="w-[512px] border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 text-sm leading-relaxed">
+                                <td className="w-[512px] border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed">
                                   <div className="flex gap-2">
                                     {item.itineraries.map((itinerary, i) => (
                                       <div
@@ -199,7 +199,7 @@ export function Packages() {
                                     ))}
                                   </div>
                                 </td>
-                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 text-sm leading-relaxed">
+                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
                                   {item.itineraries
                                     .map(
                                       (itinerary) =>
@@ -210,7 +210,7 @@ export function Packages() {
                                 <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
                                   <span
                                     className={clsx(
-                                      'flex items-center gap-2 text-sm leading-relaxed before:h-2 before:w-2 before:rounded-full',
+                                      'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',
                                       {
                                         'before:bg-green-500':
                                           item.isActive === 'active',
