@@ -67,10 +67,14 @@ export function Accommodations() {
       .includes(searchText.toLowerCase())
 
     const isCityMatch =
-      selectedCity === '' || accommodation.city === selectedCity
+      ((selectedCity === 'all' || selectedCity === '') && accommodation) ||
+      selectedCity === '' ||
+      accommodation.city === selectedCity
 
     const isStateMatch =
-      selectedState === '' || accommodation.isActive === selectedState
+      ((selectedState === 'all' || selectedState === '') && accommodation) ||
+      (selectedState === 'Ativo' && accommodation.isActive === 'active') ||
+      (selectedState === 'Inativo' && accommodation.isActive === 'inactive')
 
     return isSearchMatch && isCityMatch && isStateMatch
   })
@@ -83,7 +87,7 @@ export function Accommodations() {
       <div className="w-full">
         <Header title="Hospedagens" />
         <div className="flex h-[calc(100vh-5rem)] w-full flex-col">
-          <div className="z-50 mx-48 my-12 grid grid-cols-4 gap-6">
+          <div className="z-50 mx-28 my-12 grid grid-cols-4 gap-6">
             <Input
               placeholder="Pesquisar"
               icon={<MagnifyingGlass size={24} />}
@@ -114,13 +118,13 @@ export function Accommodations() {
 
           <>
             {isLoading ? (
-              <div className="mx-48 flex max-h-full flex-1 flex-col items-center justify-center">
+              <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center">
                 <Loading />
               </div>
             ) : (
               <>
                 {accommodations.length === 0 ? (
-                  <div className="mx-48 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
+                  <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                     <Barricade size={40} className="text-gray-800" />
                     <span className="max-w-xl text-center leading-relaxed text-gray-600">
                       Ops! Parece que ainda não temos hospedagens cadastradas.
@@ -137,7 +141,7 @@ export function Accommodations() {
                 ) : (
                   <>
                     {hasResults ? (
-                      <div className="mx-48 grid max-h-full grid-cols-4 gap-6">
+                      <div className="mx-28 grid max-h-full grid-cols-4 gap-6">
                         {filteredAccommodations.map(
                           (accommodation: Accommodation) => (
                             <CardAccommodation
@@ -152,7 +156,7 @@ export function Accommodations() {
                         )}
                       </div>
                     ) : (
-                      <div className="mx-48 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
+                      <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                         <Binoculars size={40} className="text-gray-800" />
                         <span className="max-w-xl text-center leading-relaxed text-gray-600">
                           Infelizmente, não encontramos resultados
