@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom'
 import {
-  Phone,
-  WhatsappLogo,
-  InstagramLogo,
-  FacebookLogo,
-  TwitterLogo,
-  YoutubeLogo,
   Envelope,
+  FacebookLogo,
+  InstagramLogo,
+  Phone,
+  TwitterLogo,
+  WhatsappLogo,
+  YoutubeLogo,
 } from 'phosphor-react'
+import { Link } from 'react-router-dom'
 
 export function Footer() {
   return (
@@ -21,7 +21,7 @@ export function Footer() {
             </span>
           </span>
         </div>
-        <div className="col-span-1 md:col-span-3 lg:col-span-3 ">
+        <div className="col-span-1 md:col-span-3 lg:col-span-3">
           <h3 className="font-bold text-gray-800">TRIPvalley</h3>
           <ul className="mt-2 space-y-2">
             <li>

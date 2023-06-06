@@ -20,7 +20,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   { inputType, icon, error = null, ...rest },
   ref,
 ) => {
-  // const [inputValue, setInputValue] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
   function handleShowPassword(e: FormEvent) {
@@ -50,8 +49,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         </div>
         <input
           className="h-full w-full rounded-r-lg bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none"
-          // value={inputValue}
-          // onChange={(e) => setInputValue(e.target.value)}
           type={inputType === 'password' && showPassword ? 'text' : inputType}
           ref={ref}
           {...rest}
