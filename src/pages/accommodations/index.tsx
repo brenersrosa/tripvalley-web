@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { api } from '../../lib/api'
 
-import { Button } from '../../components/Button'
+import { Button } from '../../components/ButtonDialog'
 import { Header } from '../../components/Header'
 import { Loading } from '../../components/Loading'
 import { NavBar } from '../../components/NavBar'

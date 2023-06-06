@@ -1,7 +1,7 @@
 import { GlobeHemisphereWest, MagnifyingGlass, Ticket } from 'phosphor-react'
 import { Balancer } from 'react-wrap-balancer'
 
-import { Button } from '../Button'
+import { Button } from '../ButtonDialog'
 
 import wave from '../../assets/wave.svg'
 

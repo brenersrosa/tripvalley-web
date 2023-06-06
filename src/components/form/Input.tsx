@@ -1,5 +1,17 @@
 import clsx from 'clsx'
-import { EnvelopeSimple, Eye, EyeSlash, Lock, User } from 'phosphor-react'
+import {
+  EnvelopeSimple,
+  Eye,
+  EyeSlash,
+  Lock,
+  User,
+  MapPin,
+  Calendar,
+  Buildings,
+  CurrencyDollar,
+  Users,
+  UsersFour,
+} from 'phosphor-react'
 import {
   FormEvent,
   ForwardRefRenderFunction,
@@ -11,7 +23,16 @@ import {
 import { FieldError } from 'react-hook-form'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  inputType?: 'user' | 'email' | 'password'
+  inputType?:
+    | 'user'
+    | 'email'
+    | 'password'
+    | 'destiny'
+    | 'date'
+    | 'accommodations'
+    | 'price'
+    | 'adults'
+    | 'children'
   icon?: ReactNode
   error?: FieldError
 }
@@ -44,6 +65,24 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           )}
           {inputType === 'password' && (
             <Lock size={24} className="text-gray-500" />
+          )}
+          {inputType === 'destiny' && (
+            <MapPin size={24} className="text-gray-500" />
+          )}
+          {inputType === 'date' && (
+            <Calendar size={24} className="text-gray-500" />
+          )}
+          {inputType === 'accommodations' && (
+            <Buildings size={24} className="text-gray-500" />
+          )}
+          {inputType === 'price' && (
+            <CurrencyDollar size={24} className="text-gray-500" />
+          )}
+          {inputType === 'adults' && (
+            <Users size={24} className="text-gray-500" />
+          )}
+          {inputType === 'children' && (
+            <UsersFour size={24} className="text-gray-500" />
           )}
           {icon}
         </div>
