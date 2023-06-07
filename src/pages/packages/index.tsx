@@ -1,10 +1,20 @@
 import clsx from 'clsx'
-import { Barricade, Binoculars, MagnifyingGlass, Plus } from 'phosphor-react'
+import {
+  Barricade,
+  Binoculars,
+  MagnifyingGlass,
+  Plus,
+  XCircle,
+} from 'phosphor-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { Balancer } from 'react-wrap-balancer'
+import colors from 'tailwindcss/colors'
 
 import { api } from '../../lib/api'
+
+import { PackageProps } from '../../@types/Package'
 
 import { Button } from '../../components/Button'
 import { ButtonOptions } from '../../components/ButtonOptions'
@@ -14,32 +24,8 @@ import { NavBar } from '../../components/NavBar'
 import { Input } from '../../components/form/Input'
 import { Select } from '../../components/form/Select'
 
-interface Itinerary {
-  id: string
-  itinerary: {
-    id: string
-    numberOfDays: number
-    category: {
-      id: string
-      name: string
-    }
-    accommodation: {
-      id: string
-      city: string
-    }
-  }
-}
-
-interface PackageProps {
-  id: string
-  name: string
-  itineraries: Itinerary[]
-  numberOfDays: number
-  isActive: 'active' | 'inactive'
-}
-
 export function Packages() {
-  const [packagesList, setPackagesList] = useState<PackageProps[]>([])
+  const [pkg, setPkg] = useState<PackageProps[]>([])
   const [cities, setCities] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCity, setSelectedCity] = useState('')
@@ -54,7 +40,7 @@ export function Packages() {
     api
       .get('/packages')
       .then((response) => {
-        setPackagesList(response.data)
+        setPkg(response.data)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -63,7 +49,7 @@ export function Packages() {
   }, [])
 
   useEffect(() => {
-    const result = packagesList.reduce((cities: string[], items) => {
+    const result = pkg.reduce((cities: string[], items) => {
       items.itineraries.forEach((item) => {
         const city = item.itinerary.accommodation.city
         if (!cities.includes(city)) {
@@ -75,9 +61,9 @@ export function Packages() {
     }, [])
 
     setCities(result)
-  }, [packagesList])
+  }, [pkg])
 
-  const filteredPackages = packagesList.filter((item) => {
+  const filteredPackages = pkg.filter((item) => {
     const isSearchMatch = item.name
       .toLowerCase()
       .includes(searchText.toLowerCase())
@@ -99,6 +85,60 @@ export function Packages() {
   })
 
   const hasResults = filteredPackages.length > 0
+
+  async function handleToggleIsActive(pkgId: string) {
+    const updatedPackages = pkg.map(async (pkg) => {
+      if (pkg.id === pkgId) {
+        const newStatus = pkg.isActive === 'active' ? 'inactive' : 'active'
+
+        try {
+          await api.put(`/packages/${pkg.id}`, {
+            isActive: newStatus,
+            name: pkg.name,
+            transferParticular: pkg.transferParticular,
+            transferExclusive: pkg.transferExclusive,
+            transferShared: pkg.transferShared,
+            itineraries: pkg.itineraries.map((itinerary) => ({
+              id: itinerary.itinerary.id,
+              isActive: itinerary.itinerary.isActive,
+              name: itinerary.itinerary.name,
+              numberOfDays: Number(itinerary.itinerary.numberOfDays),
+              description: itinerary.itinerary.description,
+              valuePerPerson: Number(itinerary.itinerary.valuePerPerson),
+              content: itinerary.itinerary.content,
+              classification: itinerary.itinerary.classification,
+              categoryId: itinerary.itinerary.categoryId,
+              accommodationId: itinerary.itinerary.accommodation.id,
+            })),
+          })
+          console.log('Accommodation updated successfully.')
+        } catch (error) {
+          toast.error('Erro ao atualizar os dados', {
+            position: 'top-right',
+            style: {
+              backgroundColor: colors.red[500],
+              color: colors.white,
+              fontSize: 16,
+              fontWeight: 500,
+              padding: 16,
+            },
+            icon: <XCircle size={40} weight="fill" className="text-gray-50" />,
+          })
+          console.log('Error updating accommodation:', error)
+          return pkg
+        }
+        return {
+          ...pkg,
+          isActive: newStatus as 'active' | 'inactive',
+        } as PackageProps
+      }
+      return pkg
+    })
+
+    const updatedPackagesData = await Promise.all(updatedPackages)
+
+    setPkg(updatedPackagesData)
+  }
 
   return (
     <div className="flex h-screen w-full">
@@ -142,7 +182,7 @@ export function Packages() {
               </div>
             ) : (
               <>
-                {packagesList.length === 0 ? (
+                {pkg.length === 0 ? (
                   <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                     <Barricade size={40} className="text-gray-800" />
                     <span className="max-w-xl text-center leading-relaxed text-gray-600">
@@ -182,29 +222,26 @@ export function Packages() {
                             </tr>
                           </thead>
                           <tbody>
-                            {filteredPackages.map((item) => (
-                              <tr key={item.id}>
+                            {filteredPackages.map((pkg) => (
+                              <tr key={pkg.id}>
                                 <td className="line-clamp-1 border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
-                                  {item.name}
+                                  {pkg.name}
                                 </td>
                                 <td className="w-[512px] border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed">
                                   <div className="flex gap-2">
-                                    {item.itineraries.map((itinerary, i) => (
+                                    {pkg.itineraries.map((item, i) => (
                                       <div
-                                        key={`${itinerary}-${i}`}
+                                        key={`${item}-${i}`}
                                         className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200 bg-white p-1 text-center text-sm text-gray-600"
                                       >
-                                        {itinerary.itinerary.accommodation.city}
+                                        {item.itinerary.accommodation.city}
                                       </div>
                                     ))}
                                   </div>
                                 </td>
                                 <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
-                                  {item.itineraries
-                                    .map(
-                                      (itinerary) =>
-                                        itinerary.itinerary.numberOfDays,
-                                    )
+                                  {pkg.itineraries
+                                    .map((item) => item.itinerary.numberOfDays)
                                     .reduce((acc, number) => acc + number, 0)}
                                 </td>
                                 <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
@@ -213,18 +250,23 @@ export function Packages() {
                                       'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',
                                       {
                                         'before:bg-green-500':
-                                          item.isActive === 'active',
+                                          pkg.isActive === 'active',
                                         'before:bg-red-500':
-                                          item.isActive === 'inactive',
+                                          pkg.isActive === 'inactive',
                                       },
                                     )}
                                   >
-                                    {item.isActive === 'active' && 'Ativo'}
-                                    {item.isActive === 'inactive' && 'Inativo'}
+                                    {pkg.isActive === 'active' && 'Ativo'}
+                                    {pkg.isActive === 'inactive' && 'Inativo'}
                                   </span>
                                 </td>
                                 <td className="w-16 border-b-[1px] border-r-[1px] border-t-[1px] border-solid border-gray-100 p-4">
-                                  <ButtonOptions />
+                                  <ButtonOptions
+                                    onToggleIsActive={() =>
+                                      handleToggleIsActive(pkg.id)
+                                    }
+                                    state={pkg.isActive}
+                                  />
                                 </td>
                               </tr>
                             ))}
