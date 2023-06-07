@@ -3,6 +3,7 @@ import { Button } from '../components/Button'
 import { Carousel } from '../components/Carousel'
 import { Title } from '../components/Title'
 import { Input } from '../components/form/Input'
+import { CarouselMain } from '../components/CarouselMain'
 import { Feedback } from '../components/home/Feedback'
 import { HeaderUser } from '../components/home/HeaderUser'
 import { Hero } from '../components/home/Hero'
@@ -18,6 +19,8 @@ export function Home() {
         <Title title="Categorias" />
         <Carousel />
       </div>
+
+      <CarouselMain />
 
       <div className="flex flex-col gap-12 px-5 md:px-10 lg:px-40">
         <Title title="Feedback dos clientes" />
