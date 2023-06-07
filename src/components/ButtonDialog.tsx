@@ -1,8 +1,9 @@
+import { ReactNode, useState, ChangeEvent } from 'react'
 import clsx from 'clsx'
-import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import { Input } from './form/Input'
+import { VisuallyHidden } from '@reach/visually-hidden'
 
 interface ButtonProps {
   icon?: ReactNode
@@ -11,11 +12,14 @@ interface ButtonProps {
 }
 
 export function Button({ icon, title, onClick }: ButtonProps) {
+  const [price, setPrice] = useState('')
   const [destiny, setDestiny] = useState('')
   const [adults, setAdults] = useState('')
-  const [date, setDate] = useState('')
+  const [children, setChildren] = useState('')
+  const [dateGo, setDateGo] = useState('')
   const [accommodation, setAccommodation] = useState('')
-  const isButtonDisabled = !destiny || !accommodation || !adults || !date
+  const isButtonDisabled =
+    !destiny || !accommodation || !adults || !dateGo || !children
 
   return (
     <>
@@ -30,6 +34,9 @@ export function Button({ icon, title, onClick }: ButtonProps) {
               },
             )}
             onClick={onClick}
+            aria-label={
+              'Botão para buscar novo destino. vai ter uma ação: vai abrir um pequeno formulario para ser preenchido'
+            }
           >
             {icon}
             {title}
@@ -49,33 +56,62 @@ export function Button({ icon, title, onClick }: ButtonProps) {
               inputType="destiny"
               placeholder="Destino"
               autoFocus
-              onChange={(e) => setDestiny(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDestiny(e.target.value)
+              }
+              aria-label="Destino"
             />
             <Input
-              inputType="date"
+              inputType="dateGo"
               placeholder="Data de ida"
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setDateGo(e.target.value)
+              }
+              aria-label="Data de ida"
             />
           </fieldset>
           <fieldset className="mb-[15px] flex items-center gap-5">
             <Input
               inputType="accommodations"
               placeholder="Hospedagem"
-              onChange={(e) => setAccommodation(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setAccommodation(e.target.value)
+              }
+              aria-label="Hospedagem"
             />
-            <Input inputType="price" placeholder="Preço máximo" />
+            <Input
+              inputType="price"
+              placeholder="Preço máximo"
+              value={price}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const numericValue = e.target.value.replace(/\D/g, '')
+                setPrice(numericValue)
+              }}
+              aria-invalid={!price}
+              aria-label="Preço máximo"
+            />
           </fieldset>
           <fieldset className="mb-[15px] flex items-center gap-5">
             <Input
               inputType="adults"
               placeholder="Quantidade de adultos"
-              onChange={(e) => setAdults(e.target.value)}
+              value={adults}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const numericValue = e.target.value.replace(/\D/g, '')
+                setAdults(numericValue)
+              }}
+              aria-label="Quantidade de adultos"
             />
             <Input
               inputType="children"
               placeholder="Quantidade de crianças"
               defaultValue={'0'}
-              onChange={(e) => setDestiny(e.target.value)}
+              value={children}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const numericValue = e.target.value.replace(/\D/g, '')
+                setChildren(numericValue)
+              }}
+              aria-label="Quantidade de crianças"
             />
           </fieldset>
           <div className="mt-[25px] flex justify-end">
@@ -91,6 +127,7 @@ export function Button({ icon, title, onClick }: ButtonProps) {
                 )}
                 onClick={onClick}
                 disabled={isButtonDisabled}
+                aria-label="Botão de buscar pacotes, ele só vai liberar após preencher todos os campos."
               >
                 {icon}
                 Buscar pacotes
@@ -100,7 +137,7 @@ export function Button({ icon, title, onClick }: ButtonProps) {
           <Dialog.Close asChild>
             <button
               className=" absolute right-3 top-3 inline-flex h-6 w-6 appearance-none items-center justify-center rounded-full focus:border focus:border-red-300 focus:outline-none"
-              aria-label="Close"
+              aria-label="Fechar"
             >
               <X />
             </button>

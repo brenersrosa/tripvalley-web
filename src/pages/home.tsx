@@ -47,14 +47,25 @@ export function Home() {
         <h3 className="font-title text-3xl font-bold text-gray-50 md:text-6xl">
           Inscreva-se e fique atualizado
         </h3>
-        <span className="text-base text-gray-100 md:text-xl">
+        <span
+          className="text-base text-gray-100 md:text-xl"
+          aria-label="Inscreva-se e fique atualizado, ao adicionar seu e-mail ao campo abaixo, vamos enviar emails com novidades sobre o TRIPvalley"
+        >
           Receba todas atualizações e as melhores ofertas em seu e-mail.
         </span>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="col-span-1 md:col-span-2">
-            <Input inputType="email" placeholder="Insira seu melhor e-mail" />
+            <Input
+              inputType="email"
+              placeholder="Insira seu melhor e-mail"
+              aria-label="Campo para ser digitado seu e-mail"
+            />
           </div>
-          <Button icon={<CaretRight size={24} />} title="Inscreva-se" />
+          <Button
+            aria-label="Botão para confirmar o email, após confirmar vamos enviar emails para o seu email com novidades"
+            icon={<CaretRight size={24} />}
+            title="Inscreva-se"
+          />
         </div>
       </div>
       <Footer></Footer>

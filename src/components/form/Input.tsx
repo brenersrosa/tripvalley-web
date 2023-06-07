@@ -28,7 +28,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     | 'email'
     | 'password'
     | 'destiny'
-    | 'date'
+    | 'dateGo'
     | 'accommodations'
     | 'price'
     | 'adults'
@@ -69,7 +69,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           {inputType === 'destiny' && (
             <MapPin size={24} className="text-gray-500" />
           )}
-          {inputType === 'date' && (
+          {inputType === 'dateGo' && (
             <Calendar size={24} className="text-gray-500" />
           )}
           {inputType === 'accommodations' && (

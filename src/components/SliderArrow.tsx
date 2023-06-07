@@ -15,6 +15,7 @@ export function SliderArrow({ icon, direction, onClick }: sliderArrowProps) {
         '-right-16': direction === 'right',
       })}
       onClick={onClick}
+      aria-label="Botão com direções para direita ou esquerda, para conseguir passar um carrosel de imagens"
     >
       {icon}
     </button>
