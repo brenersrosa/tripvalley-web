@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import { Input } from './form/Input'
-import { VisuallyHidden } from '@reach/visually-hidden'
 
 interface ButtonProps {
   icon?: ReactNode
