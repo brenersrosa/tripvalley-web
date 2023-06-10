@@ -17,13 +17,13 @@ interface Itinerary {
       id: string
       isActive: string
       imagePath: string
-      name: string
-      dailyValue: number
       breakfast: number
       lunch: number
       dinner: number
+      city: string
       // outras propriedades relacionadas à acomodação
     }
+    valuePerPerson: number
     numberOfDays: number
     // campo do itinerario onde puxa os dias e passar para o card
   }
@@ -32,7 +32,6 @@ interface Itinerary {
 interface Package {
   id: string
   name: string
-  numberOfDays: number
   transferParticular: number
   transferShared: number
   itineraries: Itinerary[]
@@ -82,20 +81,21 @@ export function CarouselTendencies() {
   return (
     <Slider className="flex flex-col" {...settings}>
       {packages.map((pkg) => {
-        return pkg.itineraries.map((itinerary, index) => {
+        return pkg.itineraries.map((ite, index) => {
           if (index === 0) {
             return (
               <CardTendencies
-                key={itinerary.id}
-                imagePath={itinerary.itinerary.accommodation.imagePath}
+                key={ite.id}
                 name={pkg.name}
-                transferParticular={pkg.transferParticular}
+                imagePath={ite.itinerary.accommodation.imagePath}
                 transferShared={pkg.transferShared}
-                breakfast={itinerary.itinerary.accommodation.breakfast}
-                lunch={itinerary.itinerary.accommodation.lunch}
-                dinner={itinerary.itinerary.accommodation.dinner}
-                numberOfDays={itinerary.itinerary.numberOfDays}
-                dailyValue={itinerary.itinerary.accommodation.dailyValue}
+                transferParticular={pkg.transferParticular}
+                breakfast={ite.itinerary.accommodation.breakfast}
+                lunch={ite.itinerary.accommodation.lunch}
+                dinner={ite.itinerary.accommodation.dinner}
+                valuePerPerson={ite.itinerary.valuePerPerson}
+                numberOfDays={ite.itinerary.numberOfDays}
+                city={ite.itinerary.accommodation.city}
               />
             )
           }
