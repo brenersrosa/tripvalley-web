@@ -10,11 +10,32 @@ import 'slick-carousel/slick/slick.css'
 
 import { api } from '../lib/api'
 
+interface Itinerary {
+  id: string
+  itinerary: {
+    accommodation: {
+      id: string
+      isActive: string
+      imagePath: string
+      name: string
+      dailyValue: number
+      breakfast: number
+      lunch: number
+      dinner: number
+      // outras propriedades relacionadas à acomodação
+    }
+    numberOfDays: number
+    // campo do itinerario onde puxa os dias e passar para o card
+  }
+}
+
 interface Package {
   id: string
   name: string
+  numberOfDays: number
   transferParticular: number
   transferShared: number
+  itineraries: Itinerary[]
 }
 
 export function CarouselTendencies() {
@@ -25,6 +46,7 @@ export function CarouselTendencies() {
       .get('/packages')
       .then((response) => {
         setPackages(response.data)
+        console.log(response.data)
       })
       .catch((error) => {
         console.log('Error getting packages.', error)
@@ -33,7 +55,7 @@ export function CarouselTendencies() {
 
   const settings = {
     arrows: true,
-    slidesToShow: 1, // Altere o número de slides a serem exibidos em dispositivos desktop
+    slidesToShow: 3, // Altere o número de slides a serem exibidos em dispositivos desktop
     slidesToScroll: 1,
     infinite: true,
     prevArrow: <SliderArrow direction="left" icon={<CaretLeft size={48} />} />,
@@ -58,16 +80,27 @@ export function CarouselTendencies() {
   }
 
   return (
-    <Slider className="mx-5 flex flex-col md:mx-10 lg:mx-40" {...settings}>
+    <Slider className="flex flex-col" {...settings}>
       {packages.map((pkg) => {
-        return (
-          <CardTendencies
-            key={pkg.id}
-            name={pkg.name}
-            transferParticular={pkg.transferParticular}
-            transferShared={pkg.transferShared}
-          />
-        )
+        return pkg.itineraries.map((itinerary, index) => {
+          if (index === 0) {
+            return (
+              <CardTendencies
+                key={itinerary.id}
+                imagePath={itinerary.itinerary.accommodation.imagePath}
+                name={pkg.name}
+                transferParticular={pkg.transferParticular}
+                transferShared={pkg.transferShared}
+                breakfast={itinerary.itinerary.accommodation.breakfast}
+                lunch={itinerary.itinerary.accommodation.lunch}
+                dinner={itinerary.itinerary.accommodation.dinner}
+                numberOfDays={itinerary.itinerary.numberOfDays}
+                dailyValue={itinerary.itinerary.accommodation.dailyValue}
+              />
+            )
+          }
+          return null
+        })
       })}
     </Slider>
   )

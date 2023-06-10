@@ -15,19 +15,19 @@ export function Home() {
       <HeaderUser />
       <Hero />
 
-      <div className="flex flex-col gap-12 px-5 md:px-10 lg:px-40">
+      <div className="flex flex-col gap-12 px-5 md:px-20  lg:px-40">
         <Title title="Categorias" />
         <Carousel />
       </div>
 
-      <div className="flex flex-col gap-12 px-5 md:px-10 lg:px-40">
+      <div className="flex flex-col gap-12 px-5 md:px-20  lg:px-40">
         <Title title="Tendências" />
+        <CarouselTendencies />
       </div>
-      <CarouselTendencies />
 
-      <div className="flex flex-col gap-12 px-5 md:px-10 lg:px-40">
+      <div className="flex flex-col gap-12 px-5 md:px-20 lg:px-40">
         <Title title="Feedback dos clientes" />
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-1 lg:grid-cols-3">
           <Feedback
             feedback="A Trip Valley superou minhas expectativas! Tudo foi muito bem planejado e organizado, o atendimento foi excelente e as opções de passeios foram incríveis. Recomendo muito!"
             image="src/assets/feedback/profile-C.svg"

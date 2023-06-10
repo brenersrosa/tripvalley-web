@@ -8,6 +8,7 @@ import { Home } from './pages/home'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
 import { SignIn } from './pages/signIn'
+import PaymentPage from './pages/payment'
 
 export function Router() {
   return (
@@ -46,6 +47,7 @@ export function Router() {
           </ProtectedRoute>
         }
       />
+      <Route path="/payment" element={<PaymentPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
