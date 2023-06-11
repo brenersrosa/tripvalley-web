@@ -8,7 +8,9 @@ import { Home } from './pages/home'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
 import { SignIn } from './pages/signIn'
-import PaymentPage from './pages/payment'
+import { PaymentPage } from './pages/payment'
+import { PackageBuy } from './pages/buyPackageTest'
+import { PackageSuccess } from './pages/successful'
 
 export function Router() {
   return (
@@ -48,6 +50,8 @@ export function Router() {
         }
       />
       <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/buyPackageTest" element={<PackageBuy />} />
+      <Route path="/successful" element={<PackageSuccess />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

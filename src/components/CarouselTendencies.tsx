@@ -9,7 +9,6 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 
 import { PackageProps } from '../@types/Package'
-
 import { api } from '../lib/api'
 
 export function CarouselTendencies() {
@@ -27,9 +26,9 @@ export function CarouselTendencies() {
       })
   }, [])
 
-  const settings = {
+  const sliderSettings = {
     arrows: true,
-    slidesToShow: 3, // Altere o número de slides a serem exibidos em dispositivos desktop
+    slidesToShow: 3,
     slidesToScroll: 1,
     infinite: false,
     prevArrow: <SliderArrow direction="left" icon={<CaretLeft size={48} />} />,
@@ -38,13 +37,13 @@ export function CarouselTendencies() {
     ),
     responsive: [
       {
-        breakpoint: 1024, // Defina o ponto de interrupção para dispositivos desktop (exemplo: 1024px)
+        breakpoint: 1024,
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 768, // Defina o ponto de interrupção para tablets (exemplo: 768px)
+        breakpoint: 768,
         settings: {
           arrows: false,
           slidesToShow: 1,
@@ -54,7 +53,7 @@ export function CarouselTendencies() {
   }
 
   return (
-    <Slider className="flex flex-col" {...settings}>
+    <Slider className="flex flex-col" {...sliderSettings}>
       {packages.map((pkg) => {
         return pkg.itineraries.map((ite, index) => {
           if (index === 0) {

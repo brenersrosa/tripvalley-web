@@ -32,18 +32,6 @@ export function CardTendencies({
   const foodDinner = dinner ? 'Jantar' : ''
   const priceDiscount = (valuePerPerson * 1.15).toFixed(2)
 
-  const renderDiscountLabel = (
-    <span className="rounded-md bg-green-500 px-1 py-1 text-xs font-light italic text-gray-200">
-      {'15% desconto'}
-    </span>
-  )
-
-  const renderPrice = (
-    <div className="mt-2 text-3xl font-bold text-gray-800">
-      R$ {valuePerPerson},00
-    </div>
-  )
-
   const renderFoodLabel = (foodText: string) => (
     <div className="rounded-md bg-green-500 px-1 py-1 text-xs font-light text-gray-200">
       {foodText}
