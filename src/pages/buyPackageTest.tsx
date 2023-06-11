@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 export function PackageBuy() {
   const navigate = useNavigate()
-  const [productName, setProductName] = useState('Prensadinhuu')
+  const [productName, setProductName] = useState('Ubachuva')
   const [productValue, setProductValue] = useState(500)
 
   const handleBuy = () => {
