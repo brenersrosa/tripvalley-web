@@ -8,37 +8,12 @@ import { CardTendencies } from './CardTendencies'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 
+import { PackageProps } from '../@types/Package'
+
 import { api } from '../lib/api'
 
-interface Itinerary {
-  id: string
-  itinerary: {
-    accommodation: {
-      id: string
-      isActive: string
-      imagePath: string
-      breakfast: number
-      lunch: number
-      dinner: number
-      city: string
-      // outras propriedades relacionadas à acomodação
-    }
-    valuePerPerson: number
-    numberOfDays: number
-    // campo do itinerario onde puxa os dias e passar para o card
-  }
-}
-
-interface Package {
-  id: string
-  name: string
-  transferParticular: number
-  transferShared: number
-  itineraries: Itinerary[]
-}
-
 export function CarouselTendencies() {
-  const [packages, setPackages] = useState<Package[]>([])
+  const [packages, setPackages] = useState<PackageProps[]>([])
 
   useEffect(() => {
     api
@@ -56,7 +31,7 @@ export function CarouselTendencies() {
     arrows: true,
     slidesToShow: 3, // Altere o número de slides a serem exibidos em dispositivos desktop
     slidesToScroll: 1,
-    infinite: true,
+    infinite: false,
     prevArrow: <SliderArrow direction="left" icon={<CaretLeft size={48} />} />,
     nextArrow: (
       <SliderArrow direction="right" icon={<CaretRight size={48} />} />
@@ -85,7 +60,7 @@ export function CarouselTendencies() {
           if (index === 0) {
             return (
               <CardTendencies
-                key={ite.id}
+                key={pkg.id}
                 name={pkg.name}
                 imagePath={ite.itinerary.accommodation.imagePath}
                 transferShared={pkg.transferShared}
