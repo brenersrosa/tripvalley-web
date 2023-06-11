@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 export function PackageBuy() {
   const navigate = useNavigate()
-  const [productName, setProductName] = useState('Ubachuva')
-  const [productValue, setProductValue] = useState(500)
+  const [productName, setProductName] = useState('Ubatubiles')
+  const [productValue, setProductValue] = useState(150)
 
   const handleBuy = () => {
-    // Redirecionar para a página de pagamento
+    // Redirecionar para a página de pagamento com as infos (aplicar isso na página do itinerary quando estiver pronta)
     navigate('/payment', {
       state: {
         productName,
