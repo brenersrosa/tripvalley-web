@@ -1,11 +1,21 @@
-import { Barricade, Binoculars, MagnifyingGlass, Plus } from 'phosphor-react'
+import {
+  Barricade,
+  Binoculars,
+  MagnifyingGlass,
+  Plus,
+  XCircle,
+} from 'phosphor-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { Balancer } from 'react-wrap-balancer'
+import colors from 'tailwindcss/colors'
 
 import { api } from '../../lib/api'
 
-import { Button } from '../../components/ButtonDialog'
+import { AccommodationProps } from '../../@types/Accommodation'
+
+import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Loading } from '../../components/Loading'
 import { NavBar } from '../../components/NavBar'
@@ -13,17 +23,8 @@ import { CardAccommodation } from '../../components/accommodations/Card'
 import { Input } from '../../components/form/Input'
 import { Select } from '../../components/form/Select'
 
-interface Accommodation {
-  id: string
-  isActive: 'active' | 'inactive'
-  imagePath: string
-  name: string
-  city: string
-  description: string
-}
-
 export function Accommodations() {
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([])
+  const [accommodations, setAccommodations] = useState<AccommodationProps[]>([])
   const [cities, setCities] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCity, setSelectedCity] = useState('')
@@ -74,6 +75,47 @@ export function Accommodations() {
   })
 
   const hasResults = filteredAccommodations.length > 0
+
+  async function handleToggleIsActive(accommodationId: string) {
+    const updatedAccommodations = accommodations.map(async (accommodation) => {
+      if (accommodation.id === accommodationId) {
+        const newStatus =
+          accommodation.isActive === 'active' ? 'inactive' : 'active'
+
+        try {
+          await api.put(`/accommodations/${accommodation.id}`, {
+            ...accommodation,
+            dailyValue: Number(accommodation.dailyValue),
+            isActive: newStatus,
+          })
+          console.log('Accommodation updated successfully.')
+        } catch (error) {
+          toast.error('Erro ao atualizar os dados', {
+            position: 'top-right',
+            style: {
+              backgroundColor: colors.red[500],
+              color: colors.white,
+              fontSize: 16,
+              fontWeight: 500,
+              padding: 16,
+            },
+            icon: <XCircle size={40} weight="fill" className="text-gray-50" />,
+          })
+          console.log('Error updating accommodation:', error)
+          return accommodation
+        }
+        return {
+          ...accommodation,
+          isActive: newStatus as 'active' | 'inactive',
+        } as AccommodationProps
+      }
+      return accommodation
+    })
+
+    const updatedAccommodationsData = await Promise.all(updatedAccommodations)
+
+    setAccommodations(updatedAccommodationsData)
+  }
 
   return (
     <div className="flex h-screen w-full">
@@ -139,14 +181,13 @@ export function Accommodations() {
                     {hasResults ? (
                       <div className="mx-28 grid max-h-full grid-cols-4 gap-6">
                         {filteredAccommodations.map(
-                          (accommodation: Accommodation) => (
+                          (accommodation: AccommodationProps) => (
                             <CardAccommodation
                               key={accommodation.id}
-                              isActive={accommodation.isActive}
-                              imagePath={accommodation.imagePath}
-                              name={accommodation.name}
-                              city={accommodation.city}
-                              description={accommodation.description}
+                              accommodation={accommodation}
+                              onToggleIsActive={() =>
+                                handleToggleIsActive(accommodation.id)
+                              }
                             />
                           ),
                         )}
