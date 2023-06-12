@@ -1,7 +1,7 @@
 import { GlobeHemisphereWest, MagnifyingGlass, Ticket } from 'phosphor-react'
 import { Balancer } from 'react-wrap-balancer'
 
-import { Button } from '../ButtonDialog'
+import { ButtonDialog } from '../ButtonDialog'
 
 import wave from '../../assets/wave.svg'
 
@@ -21,7 +21,7 @@ export function Hero() {
             Vários destinos para você e sua família, com conforto e segurança.
           </span>
 
-          <Button
+          <ButtonDialog
             icon={<MagnifyingGlass size={24} />}
             title="Buscar novo destino"
           />

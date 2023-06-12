@@ -10,7 +10,7 @@ interface ButtonProps {
   onClick?: () => void
 }
 
-export function Button({ icon, title, onClick }: ButtonProps) {
+export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
   const [price, setPrice] = useState('')
   const [destiny, setDestiny] = useState('')
   const [adults, setAdults] = useState('')

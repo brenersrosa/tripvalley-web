@@ -1,9 +1,14 @@
 import { useState } from 'react'
+
 import { AlertDialog } from '@radix-ui/react-alert-dialog'
+
 import StripeCheckout, { Token } from 'react-stripe-checkout'
+
 import { useLocation, useNavigate } from 'react-router-dom'
+
 import { parseCookies } from 'nookies'
 import jwtDecode from 'jwt-decode'
+
 import '../../styles/checkout.css'
 
 import { api } from '../../lib/api'
@@ -24,22 +29,28 @@ export function PaymentForm() {
       console.log('ID do usuário:', userId)
 
       // Enviar os dados para o banco de dados
-      const { productName, productValue } = location.state // Obtém o "nome" e o "valor" do produto que foi pego da outra página
+      const { productValue } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
       const response = await api.post('/orders', {
         // Faz um post para a API
         status: 'awaiting', // Preciso entender como funciona esse field
         userId,
-        packageId: '54e82f0b-56be-4fe7-be4c-cc2596a5dffa', // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
+        packageId: 'd237ba66-9a13-4bca-8be8-943f2effda79', // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
         totalValue: productValue,
         companions: [], // Preciso entender essa companions também
         // Interesante talvez passar o nome do pacote que o usuário comprou, "productName" mas precisa alterar no backend para receber isso
       })
       console.log('Resposta da API:', response.data) // ver  oque está recebendo
 
+      try {
+        console.log('E-mail enviado com sucesso')
+      } catch (error) {
+        console.error('Erro ao enviar o e-mail:', error)
+        setErrorMessage('Erro ao enviar o e-mail')
+        return
+      }
       // Limpar o cache depois da compra
       localStorage.removeItem('productName')
       localStorage.removeItem('productValue')
-
       navigate('/successful') // Redirecionar para a página de sucesso
     } catch (error) {
       console.log('Erro ao enviar os dados para o banco de dados:', error)
@@ -128,7 +139,7 @@ export function PaymentForm() {
             name={productName}
             label="Pagar com cartão de crédito"
             alipay={true}
-            locale="br"
+            locale="auto"
             bitcoin={true}
             zipCode={true}
             allowRememberMe={true}

@@ -2,7 +2,7 @@ import { House } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import { Balancer } from 'react-wrap-balancer'
 
-import { Button } from '../components/ButtonDialog'
+import { Button } from '../components/Button'
 
 import heroImg from '../assets/not-found.svg'
 

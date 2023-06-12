@@ -1,7 +1,7 @@
 import { House, CheckCircle } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import { Balancer } from 'react-wrap-balancer'
-import { Button } from '../components/ButtonDialog'
+import { Button } from '../components/Button'
 
 export function PackageSuccess() {
   const navigate = useNavigate()
