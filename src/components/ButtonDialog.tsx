@@ -3,6 +3,9 @@ import clsx from 'clsx'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'phosphor-react'
 import { Input } from './form/Input'
+import { useNavigate } from 'react-router-dom'
+
+import { api } from '../lib/api'
 
 interface ButtonProps {
   icon?: ReactNode
@@ -10,15 +13,77 @@ interface ButtonProps {
   onClick?: () => void
 }
 
+interface Package {
+  id: number
+  name: string
+}
+
 export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
-  const [price, setPrice] = useState('')
+  const navigate = useNavigate()
   const [destiny, setDestiny] = useState('')
+  const [price, setPrice] = useState('')
+  const [dateGo, setDate] = useState('')
   const [adults, setAdults] = useState('')
   const [children, setChildren] = useState('')
-  const [dateGo, setDateGo] = useState('')
-  const [accommodation, setAccommodation] = useState('')
-  const isButtonDisabled =
-    !destiny || !accommodation || !adults || !dateGo || !children
+  const isButtonDisabled = !destiny
+
+  const searchPackage = async () => {
+    try {
+      const response = await api.get('/packages', {
+        params: {
+          nameContains: destiny,
+        },
+      })
+
+      const packages = response.data
+
+      if (packages.length > 0) {
+        // Aqui Encontra pacotes correspondentes ao nome digitado
+        const closestPackage = findClosestPackage(packages, destiny)
+        const packageId = closestPackage.id
+        // Aqui faz uma navegação e manda para uma url "packages/{id do pacote}"
+        // exemplo: http://localhost:5173/packages/5bda3790-638a-4bc8-bf19-f3b0423bcd1f
+        navigate(`/packages/${packageId}`)
+      } else {
+        // Pacote não encontrado
+        console.log('Pacote não encontrado')
+      }
+    } catch (error) {
+      // Erro ao busca o pacote
+      console.error('Erro ao buscar pacotes:', error)
+    }
+  }
+
+  const findClosestPackage = (
+    packages: Package[],
+    searchName: string,
+  ): Package => {
+    const closestPackage = packages.reduce(
+      (closest: Package, current: Package) => {
+        const closestSimilarity = getSimilarity(closest.name, searchName)
+        const currentSimilarity = getSimilarity(current.name, searchName)
+
+        if (currentSimilarity > closestSimilarity) {
+          return current
+        } else {
+          return closest
+        }
+      },
+    )
+
+    return closestPackage
+  }
+
+  const getSimilarity = (name1: string, name2: string): number => {
+    const set1 = new Set(name1.split(' '))
+    const set2 = new Set(name2.split(' '))
+
+    const intersection = new Set([...set1].filter((x) => set2.has(x)))
+    const union = new Set([...set1, ...set2])
+
+    const similarity = intersection.size / union.size
+    return similarity
+  }
 
   return (
     <>
@@ -32,7 +97,10 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
                 'w-full': title,
               },
             )}
-            onClick={onClick}
+            onClick={() => {
+              onClick?.()
+              setDestiny('')
+            }}
             aria-label={
               'Botão para buscar novo destino. vai ter uma ação: vai abrir um pequeno formulario para ser preenchido'
             }
@@ -63,9 +131,11 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
             <Input
               inputType="dateGo"
               placeholder="Data de ida"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setDateGo(e.target.value)
-              }
+              value={dateGo}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const numericValue = e.target.value.replace(/\D/g, '')
+                setDate(numericValue)
+              }}
               aria-label="Data de ida"
             />
           </fieldset>
@@ -73,9 +143,6 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
             <Input
               inputType="accommodations"
               placeholder="Hospedagem"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setAccommodation(e.target.value)
-              }
               aria-label="Hospedagem"
             />
             <Input
@@ -86,7 +153,6 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
                 const numericValue = e.target.value.replace(/\D/g, '')
                 setPrice(numericValue)
               }}
-              aria-invalid={!price}
               aria-label="Preço máximo"
             />
           </fieldset>
@@ -124,7 +190,7 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
                     'opacity-75': isButtonDisabled,
                   },
                 )}
-                onClick={onClick}
+                onClick={searchPackage}
                 disabled={isButtonDisabled}
                 aria-label="Botão de buscar pacotes, ele só vai liberar após preencher todos os campos."
               >
