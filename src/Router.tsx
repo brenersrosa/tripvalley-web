@@ -5,6 +5,8 @@ import { NotFound } from './pages/404'
 import { Accommodations } from './pages/accommodations'
 import { NewAccommodation } from './pages/accommodations/new'
 import { Home } from './pages/home'
+import { Itineraries } from './pages/itineraries'
+import { NewItinerary } from './pages/itineraries/new'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
 import { SignIn } from './pages/signIn'
@@ -27,6 +29,22 @@ export function Router() {
         element={
           <ProtectedRoute>
             <NewAccommodation />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/itineraries"
+        element={
+          <ProtectedRoute>
+            <Itineraries />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/itineraries/new"
+        element={
+          <ProtectedRoute>
+            <NewItinerary />
           </ProtectedRoute>
         }
       />

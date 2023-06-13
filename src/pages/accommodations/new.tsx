@@ -189,7 +189,7 @@ export function NewAccommodation() {
                 <div className="grid grid-cols-2 gap-6">
                   <Input
                     title="Valor da diária"
-                    value={dailyValue}
+                    value={dailyValue === 0 ? '' : dailyValue}
                     onChange={(e) => setDailyValue(Number(e.target.value))}
                     type="number"
                     step=".01"

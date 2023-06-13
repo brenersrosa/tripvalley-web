@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Balance from 'react-wrap-balancer'
 
-import { Header } from '../components/Header'
 import { FormController } from '../components/form/FormController'
+import { Header } from '../components/Header'
 import { AuthContext } from '../contexts/AuthContext'
 
 import logo from '../assets/logo-short.svg'
