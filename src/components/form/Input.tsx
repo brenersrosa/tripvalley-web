@@ -12,12 +12,13 @@ import { FieldError } from 'react-hook-form'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputType?: 'user' | 'email' | 'password'
+  title?: string
   icon?: ReactNode
   error?: FieldError
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { inputType, icon, error = null, ...rest },
+  { inputType, title, icon, error = null, ...rest },
   ref,
 ) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -28,7 +29,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   }
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-4">
+      {title && <span className="text-gray-600">{title}</span>}
       <div
         className={clsx(
           'relative flex h-14 items-center rounded-lg border-[1px] border-gray-300 focus-within:border-blue-500',
@@ -37,18 +39,28 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           },
         )}
       >
-        <div className="flex h-full w-[70px] items-center justify-center rounded-l-lg border-r border-gray-200 bg-gray-100">
-          {inputType === 'user' && <User size={24} className="text-gray-500" />}
-          {inputType === 'email' && (
-            <EnvelopeSimple size={24} className="text-gray-500" />
-          )}
-          {inputType === 'password' && (
-            <Lock size={24} className="text-gray-500" />
-          )}
-          {icon}
-        </div>
+        {inputType && (
+          <div className="flex h-full w-[70px] items-center justify-center rounded-l-lg border-r border-gray-200 bg-gray-100">
+            {inputType === 'user' && (
+              <User size={24} className="text-gray-500" />
+            )}
+            {inputType === 'email' && (
+              <EnvelopeSimple size={24} className="text-gray-500" />
+            )}
+            {inputType === 'password' && (
+              <Lock size={24} className="text-gray-500" />
+            )}
+            {icon}
+          </div>
+        )}
         <input
-          className="h-full w-full rounded-r-lg bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none"
+          className={clsx(
+            'h-full w-full bg-white px-4 py-3 text-gray-600 placeholder-gray-400 focus:outline-none',
+            {
+              'rounded-r-lg': inputType,
+              'rounded-lg': !inputType,
+            },
+          )}
           type={inputType === 'password' && showPassword ? 'text' : inputType}
           ref={ref}
           {...rest}
