@@ -12,7 +12,7 @@ interface SelectProps
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   title?: string
   placeholder?: string
-  data: string[]
+  data: string[] | { id?: string; name: string }[]
   error?: FieldError
   onChange?: (value: string) => void
 }
@@ -54,15 +54,17 @@ const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
                 className="relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none"
                 defaultChecked
               >
-                <SelectRadix.ItemText>Todos</SelectRadix.ItemText>
+                <SelectRadix.ItemText></SelectRadix.ItemText>
               </SelectRadix.Item>
               {data.map((value, i) => (
                 <SelectRadix.Item
                   key={`${value}-${i}`}
-                  value={value}
+                  value={typeof value === 'object' ? value.name : value}
                   className="relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none"
                 >
-                  <SelectRadix.ItemText>{value}</SelectRadix.ItemText>
+                  <SelectRadix.ItemText>
+                    {typeof value === 'object' ? value.name : value}
+                  </SelectRadix.ItemText>
                 </SelectRadix.Item>
               ))}
             </SelectRadix.Group>

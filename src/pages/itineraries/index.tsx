@@ -51,8 +51,6 @@ export function Itineraries() {
       })
   }, [])
 
-  console.log(itineraries)
-
   useEffect(() => {
     const result = Array.from(
       new Set(itineraries.map((itinerary) => itinerary.category.name)),
@@ -82,12 +80,9 @@ export function Itineraries() {
 
   const hasResults = filteredItineraries.length > 0
 
-  console.log(itineraries.map((itinerary) => itinerary.id))
-
   async function handleToggleIsActive(itineraryId: string) {
     const updatedItineraries = itineraries.map(async (itinerary) => {
       if (itinerary.id === itineraryId) {
-        console.log(itinerary.id)
         const newStatus =
           itinerary.isActive === 'active' ? 'inactive' : 'active'
         try {
@@ -139,7 +134,7 @@ export function Itineraries() {
             />
 
             <Select
-              placeholder="Cidade"
+              placeholder="Categoria"
               data={categories}
               value={selectedCategory}
               onChange={(value: string) => setSelectedCategory(value)}
@@ -229,7 +224,7 @@ export function Itineraries() {
                                 <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
                                   {itinerary.numberOfDays}
                                 </td>
-                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
+                                <td className="w-28 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
                                   <span
                                     className={clsx(
                                       'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',

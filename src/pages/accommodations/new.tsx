@@ -1,5 +1,8 @@
-import { FloppyDisk } from 'phosphor-react'
+import { CheckCircle, FloppyDisk, XCircle } from 'phosphor-react'
 import { FormEvent, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import colors from 'tailwindcss/colors'
 import { z } from 'zod'
 
 import { Button } from '../../components/Button'
@@ -58,6 +61,8 @@ export function NewAccommodation() {
   const [errors, setErrors] = useState<Errors>({})
 
   const cities: { [key: string]: string[] } = citiesData
+
+  const navigate = useNavigate()
 
   function validateFormData(formData: AccommodationsInputProps) {
     try {
@@ -150,9 +155,32 @@ export function NewAccommodation() {
     try {
       const response = await api.post('/accommodations', formData)
       console.log('Nova hospedagem criada com sucesso:', response.data)
+      toast.success('Nova hospedagem criada com sucesso!', {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.green[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <CheckCircle size={54} weight="fill" className="text-gray-50" />,
+      })
       clearForm()
+      navigate('/accommodations')
     } catch (error) {
       console.error('Erro ao criar nova hospedagem:', error)
+      toast.error('Erro ao criar nova hospedagem.', {
+        position: 'top-right',
+        style: {
+          backgroundColor: colors.red[500],
+          color: colors.white,
+          fontSize: 16,
+          fontWeight: 500,
+          padding: 16,
+        },
+        icon: <XCircle size={54} weight="fill" className="text-gray-50" />,
+      })
     }
   }
 
@@ -347,7 +375,7 @@ export function NewAccommodation() {
                   <div className="col-span-1">
                     <Select
                       title="Estado"
-                      data={Object.keys(cities)}
+                      data={Object.keys(cities).map((id) => ({ id, name: id }))}
                       value={uf}
                       onChange={(value: string) => setUf(value)}
                     />
@@ -355,7 +383,10 @@ export function NewAccommodation() {
                   <div className="col-span-3">
                     <Select
                       title="Cidade"
-                      data={cities[uf] || []}
+                      data={(cities[uf] || []).map((name) => ({
+                        id: name,
+                        name,
+                      }))}
                       value={city}
                       onChange={(value: string) => setCity(value)}
                     />
