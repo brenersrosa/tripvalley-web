@@ -19,7 +19,6 @@ export function CarouselTendencies() {
       .get('/packages')
       .then((response) => {
         setPackages(response.data)
-        console.log(response.data)
       })
       .catch((error) => {
         console.log('Error getting packages.', error)
@@ -55,19 +54,33 @@ export function CarouselTendencies() {
   return (
     <Slider className="flex flex-col" {...sliderSettings}>
       {packages.map((pkg) => {
+        let totalValue = 0
         return pkg.itineraries.map((ite, index) => {
           if (index === 0) {
+            const { breakfast, lunch, dinner } = ite.itinerary.accommodation
+            pkg.itineraries.forEach((ite) => {
+              const { valuePerPerson, numberOfDays } = ite.itinerary
+              const { dailyValue } = ite.itinerary.accommodation
+
+              // Cálculo da soma dos valores dos itinerários
+              totalValue +=
+                parseFloat(String(valuePerPerson)) + dailyValue * numberOfDays
+            })
+
             return (
               <CardTendencies
                 key={pkg.id}
+                id={pkg.id}
                 name={pkg.name}
-                imagePath={ite.itinerary.accommodation.imagePath}
+                imagePath={pkg.imagePath}
                 transferShared={pkg.transferShared}
                 transferParticular={pkg.transferParticular}
-                breakfast={ite.itinerary.accommodation.breakfast}
-                lunch={ite.itinerary.accommodation.lunch}
-                dinner={ite.itinerary.accommodation.dinner}
-                valuePerPerson={ite.itinerary.valuePerPerson}
+                transferExclusive={pkg.transferExclusive}
+                breakfast={breakfast}
+                lunch={lunch}
+                dinner={dinner}
+                // @ts-ignore
+                packageValue={totalValue.toFixed(2)}
                 numberOfDays={ite.itinerary.numberOfDays}
                 city={ite.itinerary.accommodation.city}
               />

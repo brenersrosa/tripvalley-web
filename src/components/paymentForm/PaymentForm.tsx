@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { AlertDialog } from '@radix-ui/react-alert-dialog'
 
@@ -29,25 +29,18 @@ export function PaymentForm() {
       console.log('ID do usuário:', userId)
 
       // Enviar os dados para o banco de dados
-      const { productValue } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
+      const { packageValue, id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
       const response = await api.post('/orders', {
         // Faz um post para a API
-        status: 'awaiting', // Preciso entender como funciona esse field
+        status: 'accept', // Preciso entender como funciona esse field
         userId,
-        packageId: 'd237ba66-9a13-4bca-8be8-943f2effda79', // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
-        totalValue: productValue,
+        packageId: id, // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
+        totalValue: packageValue,
         companions: [], // Preciso entender essa companions também
         // Interesante talvez passar o nome do pacote que o usuário comprou, "productName" mas precisa alterar no backend para receber isso
       })
       console.log('Resposta da API:', response.data) // ver  oque está recebendo
 
-      try {
-        console.log('E-mail enviado com sucesso')
-      } catch (error) {
-        console.error('Erro ao enviar o e-mail:', error)
-        setErrorMessage('Erro ao enviar o e-mail')
-        return
-      }
       // Limpar o cache depois da compra
       localStorage.removeItem('productName')
       localStorage.removeItem('productValue')
@@ -61,17 +54,42 @@ export function PaymentForm() {
   }
 
   // Obter o nome e valor do produto apenas teste [deletar depois]
-  const location = useLocation()
-  const { productName, productValue } = location.state
-  console.log(
-    'Nome do produto: ' + '[' + productName + ']',
-    'Valor do produto: ' + '[' + productValue + ']',
-  )
-
   const navigate = useNavigate()
+  const location = useLocation()
+  const { packageValue, adults, children, transferType, id } = location.state
+  const [packageName, setPackageName] = useState('')
+  const [packageDescription, setPackageDescription] = useState('')
+  const [packageImage, setPackageImage] = useState('')
+
+  useEffect(() => {
+    const fetchPackageDetails = async () => {
+      try {
+        const response = await api.get(`/packages/${id}`)
+        const { name, description, imagePath } = response.data
+        setPackageName(name)
+        setPackageDescription(description)
+        setPackageImage(imagePath)
+      } catch (error) {
+        console.error('Erro ao obter os detalhes do pacote:', error)
+      }
+    }
+
+    fetchPackageDetails()
+  }, [id])
+
+  console.log(`Informações do produto:
+  ----------------------
+  Valor total: ${packageValue}
+  Número de adultos: ${adults}
+  Número de crianças: ${children}
+  Tipo de transferência: ${transferType}
+  ID: ${id}
+  Nome do pacote: ${packageName}
+  Descrição do pacote: ${packageDescription}
+  imagePath: ${packageImage}`)
 
   return (
-    <div className="my-auto flex h-screen flex-col items-center justify-center bg-gray-200">
+    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-200 py-10">
       {errorMessage && (
         <div className="mb-4 flex flex-col items-center gap-2 rounded-xl border-2 border-gray-300 bg-red-500 px-7 py-4 font-normal text-gray-50">
           <AlertDialog>{errorMessage}</AlertDialog>
@@ -91,18 +109,26 @@ export function PaymentForm() {
           <div>
             <img
               className="max-w-[220px] rounded-lg object-cover shadow-lg brightness-95"
-              src="https://st.depositphotos.com/1620138/3305/i/450/depositphotos_33054491-stock-photo-ubatuba-sao-paulo-brazil.jpg"
+              src={packageImage}
               alt=""
             />
           </div>
           <div className="mt-4">
             <h2 className="text-lg font-semibold">Nome do pacote</h2>
-            <p className="text-gray-600">{productName}</p>
+            <p className="text-gray-600">{packageName}</p>
+            <h2 className="mt-2 text-lg font-semibold">Descrição</h2>
+            <p className="max-w-xs text-gray-600">{packageDescription}</p>
+            <h2 className="mt-2 text-lg font-semibold">Quantidad de adultos</h2>
+            <p className="max-w-xs text-gray-600">{adults}</p>
+            <h2 className="mt-2 text-lg font-semibold">
+              Quantidade de crianças
+            </h2>
+            <p className="max-w-xs text-gray-600">{children || '0'}</p>
           </div>
           <div className="mt-2">
             <h2 className="text-lg font-semibold">Valor do pacote</h2>
             <p className="text-gray-600">
-              {productValue.toLocaleString('pt-BR', {
+              {packageValue.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
               })}
@@ -131,12 +157,12 @@ export function PaymentForm() {
           <StripeCheckout
             token={handlePayment}
             stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
-            amount={productValue * 100} // Valor em centavos
-            image="https://st.depositphotos.com/1620138/3305/i/450/depositphotos_33054491-stock-photo-ubatuba-sao-paulo-brazil.jpg"
-            description="Pacote de 3 dias para ubatuba"
+            amount={packageValue * 100} // Valor em centavos
+            image={packageImage}
+            description={packageDescription}
             currency="BRL"
             reconfigureOnUpdate={true}
-            name={productName}
+            name={packageName}
             label="Pagar com cartão de crédito"
             alipay={true}
             locale="auto"

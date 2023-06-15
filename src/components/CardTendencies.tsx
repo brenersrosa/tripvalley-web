@@ -1,36 +1,42 @@
 import { Bag, Calendar, Car, ForkKnife } from 'phosphor-react'
+import { Link } from 'react-router-dom'
 
 interface CardProps {
+  id: string
   imagePath: string
   name: string
-  valuePerPerson: number
+  packageValue: number
   numberOfDays: number
   breakfast: boolean
   lunch: boolean
   dinner: boolean
   transferParticular: boolean
   transferShared: boolean
+  transferExclusive: boolean
   city: string
 }
 
 export function CardTendencies({
+  id,
   imagePath,
   name,
-  valuePerPerson,
+  packageValue,
   numberOfDays,
   breakfast,
   lunch,
   dinner,
   transferParticular,
   transferShared,
+  transferExclusive,
   city,
 }: CardProps) {
-  const transferPart = transferParticular ? 'Particular' : ''
+  const transferParticularText = transferParticular ? 'Particular' : ''
   const transferSharedText = transferShared ? 'Compartilhado' : ''
+  const transferExclusiveText = transferExclusive ? 'Exclusivo' : ''
   const foodBreakfast = breakfast ? 'Café da manhã' : ''
   const foodLunch = lunch ? 'Almoço' : ''
   const foodDinner = dinner ? 'Jantar' : ''
-  const priceDiscount = (valuePerPerson * 1.15).toFixed(2)
+  const priceDiscount = (packageValue * 1.15).toFixed(2)
 
   const renderFoodLabel = (foodText: string) => (
     <div className="rounded-md bg-green-500 px-1 py-1 text-xs font-light text-gray-200">
@@ -65,7 +71,7 @@ export function CardTendencies({
           </span>
         </div>
         <div className="mt-2 text-3xl font-bold text-gray-800">
-          R$ {valuePerPerson + ''}
+          R$ {packageValue + ''}
         </div>
         <div className="mb-4 text-base text-gray-600">por pessoa</div>
         <div className="mb-4 flex flex-col gap-2">
@@ -80,14 +86,20 @@ export function CardTendencies({
           </div>
           <div className="flex flex-row items-center gap-2">
             <Car size={20} />
-            {transferPart && renderTransferLabel(transferPart)}
+            {transferParticularText &&
+              renderTransferLabel(transferParticularText)}
             {transferSharedText && renderTransferLabel(transferSharedText)}
+            {transferExclusiveText &&
+              renderTransferLabel(transferExclusiveText)}
           </div>
         </div>
-        <button className="flex w-full flex-row items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 text-base font-normal text-white hover:bg-blue-700">
+        <Link
+          to={`/packages/${id}`}
+          className="flex w-full flex-row items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 text-base font-normal text-white hover:bg-blue-700"
+        >
           <Bag size={20} />
           Reservar pacote
-        </button>
+        </Link>
       </div>
     </div>
   )

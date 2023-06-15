@@ -8,9 +8,10 @@ import { Home } from './pages/home'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
 import { SignIn } from './pages/signIn'
-import { PaymentPage } from './pages/payment'
-import { PackageBuy } from './pages/buyPackageTest'
-import { PackageSuccess } from './pages/successful'
+import { Payment } from './pages/payment/payment'
+import { PaymentSuccess } from './pages/payment/successful'
+import { UserPackages } from './pages/userPackages'
+import { Companions } from './pages/companions/companions'
 
 export function Router() {
   return (
@@ -49,9 +50,31 @@ export function Router() {
           </ProtectedRoute>
         }
       />
-      <Route path="/payment" element={<PaymentPage />} />
-      <Route path="/buyPackageTest" element={<PackageBuy />} />
-      <Route path="/successful" element={<PackageSuccess />} />
+      <Route
+        path="/payment"
+        element={
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/companions"
+        element={
+          <ProtectedRoute>
+            <Companions />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/successful"
+        element={
+          <ProtectedRoute>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/packages/:id" element={<UserPackages />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

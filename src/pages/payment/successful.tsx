@@ -1,9 +1,9 @@
 import { House, CheckCircle } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import { Balancer } from 'react-wrap-balancer'
-import { Button } from '../components/Button'
+import { Button } from '../../components/Button'
 
-export function PackageSuccess() {
+export function PaymentSuccess() {
   const navigate = useNavigate()
 
   return (

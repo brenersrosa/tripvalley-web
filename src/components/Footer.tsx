@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 export function Footer() {
   return (
     <footer className="border-t-2 px-5 py-6 sm:px-6 lg:mx-0">
-      <div className="mx-5 grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-4 md:mx-10 md:grid-cols-12 lg:mx-40 lg:grid-cols-12">
+      <div className="mx-5 grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-4 md:mx-10 md:grid-cols-12 lg:mx-40 lg:grid-cols-12 lg:gap-12">
         <div className="col-span-1 flex md:col-span-3 md:items-start lg:col-span-3 lg:items-center">
           <span className="text-2xl font-bold text-blue-500 md:text-4xl">
             TRIP
