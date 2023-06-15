@@ -1,27 +1,38 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import {
+  ButtonHTMLAttributes,
+  ForwardRefRenderFunction,
+  ReactNode,
+  forwardRef,
+} from 'react'
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode
   title?: string
+  variant?: 'default' | 'save'
   onClick?: () => void
 }
-export function Button({ icon, title, onClick }: ButtonProps) {
+
+const ButtonBase: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+  // @ts-ignore
+  { icon, title, variant = 'default', onClick, ...rest },
+  ref,
+) => {
   return (
-    <>
-      <button
-        className={clsx(
-          'flex h-14 items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600',
-          {
-            'w-14': !title,
-            'w-full': title,
-          },
-        )}
-        onClick={onClick}
-      >
-        {icon}
-        {title}
-      </button>
-    </>
+    <button
+      className={clsx(
+        'flex h-14 items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600',
+        {
+          'w-14': !title,
+          'w-full': title,
+        },
+      )}
+      onClick={onClick}
+    >
+      {icon}
+      {title}
+    </button>
   )
 }
+
+export const Button = forwardRef(ButtonBase)

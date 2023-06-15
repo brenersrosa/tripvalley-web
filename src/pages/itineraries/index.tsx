@@ -14,7 +14,7 @@ import colors from 'tailwindcss/colors'
 
 import { api } from '../../lib/api'
 
-import { PackageProps } from '../../@types/Package'
+import { ItineraryProps } from '../../@types/Itinerary'
 
 import { Button } from '../../components/Button'
 import { ButtonOptions } from '../../components/ButtonOptions'
@@ -23,12 +23,15 @@ import { Loading } from '../../components/Loading'
 import { NavBar } from '../../components/NavBar'
 import { Input } from '../../components/form/Input'
 import { Select } from '../../components/form/Select'
+import { formatCurrency } from '../../utils/formatCurrency'
 
-export function Packages() {
-  const [pkg, setPkg] = useState<PackageProps[]>([])
-  const [cities, setCities] = useState<string[]>([])
+export function Itineraries() {
+  const [itineraries, setItineraries] = useState<ItineraryProps[]>([])
+  // const [cities, setCities] = useState<string[]>([])
+  const [categories, setCategories] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedCity, setSelectedCity] = useState('')
+  // const [selectedCity, setSelectedCity] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedState, setSelectedState] = useState('')
   const [searchText, setSearchText] = useState('')
 
@@ -38,9 +41,9 @@ export function Packages() {
 
   useEffect(() => {
     api
-      .get('/packages')
+      .get('/itineraries')
       .then((response) => {
-        setPkg(response.data)
+        setItineraries(response.data)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -49,69 +52,47 @@ export function Packages() {
   }, [])
 
   useEffect(() => {
-    const result = pkg.reduce((cities: string[], items) => {
-      items.itineraries.forEach((item) => {
-        const city = item.itinerary.accommodation.city
-        if (!cities.includes(city)) {
-          cities.push(city)
-        }
-      })
-      setIsLoading(false)
-      return cities
-    }, [])
+    const result = Array.from(
+      new Set(itineraries.map((itinerary) => itinerary.category.name)),
+    )
+    setIsLoading(false)
 
-    setCities(result)
-  }, [pkg])
+    setCategories(result)
+  }, [itineraries])
 
-  const filteredPackages = pkg.filter((item) => {
+  const filteredItineraries = itineraries.filter((item) => {
     const isSearchMatch = item.name
       .toLowerCase()
       .includes(searchText.toLowerCase())
 
-    const isCityMatch =
-      ((selectedCity === 'all' || selectedCity === '') && item) ||
-      selectedCity === '' ||
-      item.itineraries
-        .map((itinerary) => itinerary.itinerary.accommodation.city)
-        .map((city) => city)
-        .includes(selectedCity)
+    const isCategoryMatch =
+      ((selectedCategory === 'all' || selectedCategory === '') && item) ||
+      selectedCategory === '' ||
+      item.category.name === selectedCategory
 
     const isStateMatch =
       ((selectedState === 'all' || selectedState === '') && item) ||
       (selectedState === 'Ativo' && item.isActive === 'active') ||
       (selectedState === 'Inativo' && item.isActive === 'inactive')
 
-    return isSearchMatch && isCityMatch && isStateMatch
+    return isSearchMatch && isCategoryMatch && isStateMatch
   })
 
-  const hasResults = filteredPackages.length > 0
+  const hasResults = filteredItineraries.length > 0
 
-  async function handleToggleIsActive(pkgId: string) {
-    const updatedPackages = pkg.map(async (pkg) => {
-      if (pkg.id === pkgId) {
-        const newStatus = pkg.isActive === 'active' ? 'inactive' : 'active'
-
+  async function handleToggleIsActive(itineraryId: string) {
+    const updatedItineraries = itineraries.map(async (itinerary) => {
+      if (itinerary.id === itineraryId) {
+        const newStatus =
+          itinerary.isActive === 'active' ? 'inactive' : 'active'
         try {
-          await api.put(`/packages/${pkg.id}`, {
+          await api.put(`/itineraries/${itinerary.id}`, {
+            ...itinerary,
             isActive: newStatus,
-            name: pkg.name,
-            transferParticular: pkg.transferParticular,
-            transferExclusive: pkg.transferExclusive,
-            transferShared: pkg.transferShared,
-            itineraries: pkg.itineraries.map((itinerary) => ({
-              id: itinerary.itinerary.id,
-              isActive: itinerary.itinerary.isActive,
-              name: itinerary.itinerary.name,
-              numberOfDays: Number(itinerary.itinerary.numberOfDays),
-              description: itinerary.itinerary.description,
-              valuePerPerson: Number(itinerary.itinerary.valuePerPerson),
-              content: itinerary.itinerary.content,
-              classification: itinerary.itinerary.classification,
-              categoryId: itinerary.itinerary.category.id,
-              accommodationId: itinerary.itinerary.accommodation.id,
-            })),
+            numberOfDays: Number(itinerary.numberOfDays),
+            valuePerPerson: Number(itinerary.valuePerPerson),
           })
-          console.log('Package updated successfully.')
+          console.log('Itinerary updated successfully.')
         } catch (error) {
           toast.error('Erro ao atualizar os dados', {
             position: 'top-right',
@@ -124,27 +105,25 @@ export function Packages() {
             },
             icon: <XCircle size={40} weight="fill" className="text-gray-50" />,
           })
-          console.log('Error updating package:', error)
-          return pkg
+          console.log('Error updating itinerary:', error)
+          return itinerary
         }
         return {
-          ...pkg,
+          ...itinerary,
           isActive: newStatus as 'active' | 'inactive',
-        } as PackageProps
+        } as ItineraryProps
       }
-      return pkg
+      return itinerary
     })
-
-    const updatedPackagesData = await Promise.all(updatedPackages)
-
-    setPkg(updatedPackagesData)
+    const updatedItinerariesData = await Promise.all(updatedItineraries)
+    setItineraries(updatedItinerariesData)
   }
 
   return (
     <div className="flex h-screen w-full">
       <NavBar />
       <div className="w-full">
-        <Header title="Pacotes" />
+        <Header title="Ititerários" />
         <div className="flex h-[calc(100vh-5rem)] w-full flex-col">
           <div className="z-50 mx-28 my-12 grid grid-cols-4 gap-6">
             <Input
@@ -155,10 +134,10 @@ export function Packages() {
             />
 
             <Select
-              placeholder="Cidade"
-              data={cities}
-              value={selectedCity}
-              onChange={(value: string) => setSelectedCity(value)}
+              placeholder="Categoria"
+              data={categories}
+              value={selectedCategory}
+              onChange={(value: string) => setSelectedCategory(value)}
             />
 
             <Select
@@ -171,7 +150,7 @@ export function Packages() {
             <Button
               icon={<Plus size={24} />}
               title="Adicionar"
-              onClick={() => navigate('/packages/new')}
+              onClick={() => navigate('/itineraries/new')}
             />
           </div>
 
@@ -182,18 +161,18 @@ export function Packages() {
               </div>
             ) : (
               <>
-                {pkg.length === 0 ? (
+                {itineraries.length === 0 ? (
                   <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                     <Barricade size={40} className="text-gray-800" />
                     <span className="max-w-xl text-center leading-relaxed text-gray-600">
                       <Balancer>
-                        Ops! Parece que ainda não temos pacotes cadastrados. Que
-                        tal começar a{' '}
+                        Ops! Parece que ainda não temos itinerários cadastrados.
+                        Que tal começar a{' '}
                         <a
                           className="cursor-pointer font-medium text-blue-500 transition-colors hover:text-blue-600"
                           onClick={() => navigate('/packages/new')}
                         >
-                          cadastrar pacotes
+                          cadastrar itinerários
                         </a>{' '}
                         para oferecer aos seus clientes?
                       </Balancer>
@@ -210,7 +189,13 @@ export function Packages() {
                                 Nome
                               </th>
                               <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
-                                Cidades
+                                Categoria
+                              </th>
+                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                                Valor por pessoa
+                              </th>
+                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                                Hospedagem
                               </th>
                               <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Qtd. de dias
@@ -222,50 +207,46 @@ export function Packages() {
                             </tr>
                           </thead>
                           <tbody>
-                            {filteredPackages.map((pkg) => (
-                              <tr key={pkg.id}>
-                                <td className="border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
-                                  {pkg.name}
+                            {filteredItineraries.map((itinerary) => (
+                              <tr key={itinerary.id}>
+                                <td className="w-56 border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                  {itinerary.name}
                                 </td>
-                                <td className="w-[512px] border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed">
-                                  <div className="flex gap-2">
-                                    {pkg.itineraries.map((item, i) => (
-                                      <div
-                                        key={`${item}-${i}`}
-                                        className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200 bg-white p-1 text-center text-sm text-gray-600"
-                                      >
-                                        {item.itinerary.accommodation.city}
-                                      </div>
-                                    ))}
-                                  </div>
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                  {itinerary.category.name}
                                 </td>
-                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
-                                  {pkg.itineraries
-                                    .map((item) => item.itinerary.numberOfDays)
-                                    .reduce((acc, number) => acc + number, 0)}
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                  {formatCurrency(itinerary.valuePerPerson)}
                                 </td>
-                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                  {itinerary.accommodation.name}
+                                </td>
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                  {itinerary.numberOfDays}
+                                </td>
+                                <td className="w-28 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
                                   <span
                                     className={clsx(
                                       'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',
                                       {
                                         'before:bg-green-500':
-                                          pkg.isActive === 'active',
+                                          itinerary.isActive === 'active',
                                         'before:bg-red-500':
-                                          pkg.isActive === 'inactive',
+                                          itinerary.isActive === 'inactive',
                                       },
                                     )}
                                   >
-                                    {pkg.isActive === 'active' && 'Ativo'}
-                                    {pkg.isActive === 'inactive' && 'Inativo'}
+                                    {itinerary.isActive === 'active' && 'Ativo'}
+                                    {itinerary.isActive === 'inactive' &&
+                                      'Inativo'}
                                   </span>
                                 </td>
                                 <td className="w-16 border-b-[1px] border-r-[1px] border-t-[1px] border-solid border-gray-100 p-4">
                                   <ButtonOptions
                                     onToggleIsActive={() =>
-                                      handleToggleIsActive(pkg.id)
+                                      handleToggleIsActive(itinerary.id)
                                     }
-                                    state={pkg.isActive}
+                                    state={itinerary.isActive}
                                   />
                                 </td>
                               </tr>

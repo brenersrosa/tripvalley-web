@@ -1,4 +1,4 @@
-import { Buildings, Package, User } from 'phosphor-react'
+import { Buildings, MapTrifold, Package, User } from 'phosphor-react'
 
 import logo from '../assets/logo-short.svg'
 import { ActiveLink } from './ActiveLink'
@@ -12,6 +12,11 @@ export function NavBar() {
           icon={<Buildings size={24} className="text-white" />}
           link="/accommodations"
           active
+        />
+
+        <ActiveLink
+          icon={<MapTrifold size={24} className="text-white" />}
+          link="/itineraries"
         />
 
         <ActiveLink
