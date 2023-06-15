@@ -46,7 +46,7 @@ export function TransferSelect({
           <SelectRadix.Group>
             <SelectRadix.Item
               value=""
-              className={`relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none ${
+              className={`relative flex select-none items-center px-4 py-4 text-gray-600  focus:outline-none ${
                 focusedItem === '' ? 'focus:border-blue-500' : ''
               }`}
               disabled
@@ -56,9 +56,7 @@ export function TransferSelect({
             {transferShared && (
               <SelectRadix.Item
                 value="Comunitário"
-                className={`relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none ${
-                  focusedItem === 'Comunitário' ? 'focus:border-blue-500' : ''
-                }`}
+                className="relative flex cursor-pointer select-none items-center border border-transparent px-4 py-4 text-gray-600 hover:rounded-md hover:border hover:border-blue-500 hover:bg-gray-100 focus:outline-none"
                 onFocus={() => handleItemFocus('Comunitário')}
               >
                 <SelectRadix.ItemText>Comunitário</SelectRadix.ItemText>
@@ -67,9 +65,7 @@ export function TransferSelect({
             {transferExclusive && (
               <SelectRadix.Item
                 value="Particular"
-                className={`relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none ${
-                  focusedItem === 'Particular' ? 'focus:border-blue-500' : ''
-                }`}
+                className="relative flex cursor-pointer select-none items-center border border-transparent px-4 py-4 text-gray-600 hover:rounded-md hover:border hover:border-blue-500 hover:bg-gray-100 focus:outline-none"
                 onFocus={() => handleItemFocus('Particular')}
               >
                 <SelectRadix.ItemText>Particular</SelectRadix.ItemText>

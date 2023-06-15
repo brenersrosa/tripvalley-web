@@ -15,6 +15,7 @@ import {
   Handbag,
 } from 'phosphor-react'
 
+import { format } from 'date-fns'
 import { HeroLocation } from '../components/HeroPackageDetails'
 import { HeaderUser } from '../components/home/HeaderUser'
 import { Title } from '../components/Title'
@@ -44,6 +45,10 @@ export function UserPackages() {
     null,
   )
   const [isTransferSelected, setIsTransferSelected] = useState<boolean>(false) // Estado para controlar se um transfer foi selecionado
+
+  // Obtém a data de partida e volta com base nos dados do package
+  const departureDate = packageSelected?.departureDate
+  const backDate = packageSelected?.backDate
 
   // Função de retorno de chamada para calcular o número total de dias
   const totalNumberOfDays = useCallback(() => {
@@ -169,6 +174,13 @@ export function UserPackages() {
     )
   }
 
+  const formatDate = (date: string | undefined): string => {
+    return date ? format(new Date(date), 'dd/MM/yyyy') : ''
+  }
+
+  const departureDateFormatted = formatDate(departureDate)
+  const backDateFormatted = formatDate(backDate)
+
   return (
     <div className="flex flex-col gap-16 bg-gray-100 md:gap-24">
       <HeaderUser />
@@ -181,6 +193,8 @@ export function UserPackages() {
               locationName={packageSelected.name}
               description={packageSelected.description}
               showDescription={true}
+              departureDate={departureDateFormatted}
+              backDate={backDateFormatted}
               numberOfDays={totalNumberOfDays()}
               totalPackageValue={valueItineraryAndAccommodations}
             />

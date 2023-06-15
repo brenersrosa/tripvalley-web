@@ -9,6 +9,8 @@ export interface PackageProps {
   transferParticular: boolean
   transferExclusive: boolean
   transferShared: boolean
+  departureDate: string
+  backDate: string
   itineraries: {
     itinerary: ItineraryProps
   }[]
