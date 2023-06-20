@@ -5,10 +5,15 @@ import { NotFound } from './pages/404'
 import { Accommodations } from './pages/accommodations'
 import { NewAccommodation } from './pages/accommodations/new'
 import { Home } from './pages/home'
+import { Itineraries } from './pages/itineraries'
+import { NewItinerary } from './pages/itineraries/new'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
 import { SignIn } from './pages/signIn'
-import PaymentPage from './pages/payment'
+import { Payment } from './pages/payment/payment'
+import { PaymentSuccess } from './pages/payment/successful'
+import { UserPackages } from './pages/userPackages'
+import { Companions } from './pages/companions/companions'
 
 export function Router() {
   return (
@@ -32,6 +37,22 @@ export function Router() {
         }
       />
       <Route
+        path="/itineraries"
+        element={
+          <ProtectedRoute>
+            <Itineraries />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/itineraries/new"
+        element={
+          <ProtectedRoute>
+            <NewItinerary />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/packages"
         element={
           <ProtectedRoute>
@@ -47,7 +68,31 @@ export function Router() {
           </ProtectedRoute>
         }
       />
-      <Route path="/payment" element={<PaymentPage />} />
+      <Route
+        path="/payment"
+        element={
+          <ProtectedRoute>
+            <Payment />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/companions"
+        element={
+          <ProtectedRoute>
+            <Companions />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/successful"
+        element={
+          <ProtectedRoute>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/packages/:id" element={<UserPackages />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

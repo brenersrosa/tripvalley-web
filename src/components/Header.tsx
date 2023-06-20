@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../contexts/AuthContext'
-import { Button } from './ButtonDialog'
+import { Button } from './Button'
 
 interface FormHeaderProps {
   title: string
