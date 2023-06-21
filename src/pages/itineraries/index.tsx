@@ -80,6 +80,8 @@ export function Itineraries() {
 
   const hasResults = filteredItineraries.length > 0
 
+  console.log(itineraries)
+
   async function handleToggleIsActive(itineraryId: string) {
     const updatedItineraries = itineraries.map(async (itinerary) => {
       if (itinerary.id === itineraryId) {
@@ -182,49 +184,53 @@ export function Itineraries() {
                   <>
                     {hasResults ? (
                       <div className="mx-28 max-h-full overflow-auto">
-                        <table className="w-full min-w-[620px] border-collapse">
-                          <thead className="border-[1px] border-gray-200">
-                            <tr>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                        <table className="w-full min-w-[620px] table-auto border-collapse">
+                          <thead className="sticky top-0 bg-gray-200">
+                            <tr className="bg-gray-50">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Nome
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Categoria
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Valor por pessoa
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Hospedagem
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Qtd. de dias
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Status
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600"></th>
+                              <th className="border-b-2 border-gray-200 p-4 text-left text-sm leading-relaxed text-gray-600"></th>
                             </tr>
                           </thead>
+
                           <tbody>
                             {filteredItineraries.map((itinerary) => (
-                              <tr key={itinerary.id}>
-                                <td className="w-56 border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                              <tr
+                                key={itinerary.id}
+                                className="bg-white hover:bg-gray-100"
+                              >
+                                <td className="border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 p-4 leading-relaxed text-gray-600">
                                   {itinerary.name}
                                 </td>
-                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 p-4 leading-relaxed text-gray-600">
                                   {itinerary.category.name}
                                 </td>
-                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 p-4 leading-relaxed text-gray-600">
                                   {formatCurrency(itinerary.valuePerPerson)}
                                 </td>
-                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 p-4 leading-relaxed text-gray-600">
                                   {itinerary.accommodation.name}
                                 </td>
-                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100 p-4 leading-relaxed text-gray-600">
                                   {itinerary.numberOfDays}
                                 </td>
-                                <td className="w-28 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
+                                <td className="w-28 border-b-[1px] border-t-[1px] border-solid border-gray-100 p-4">
                                   <span
                                     className={clsx(
                                       'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',

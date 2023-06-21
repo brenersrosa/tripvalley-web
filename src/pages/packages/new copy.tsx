@@ -47,14 +47,28 @@ export function NewPackage() {
   const [description, setDescription] = useState<string>('')
   const [imagePath, setImagePath] = useState<string>('')
   const [departureDate, setDepartureDate] = useState<Date | string>('')
+  const [backDate, setBackDate] = useState<Date | string>('')
   const [transferParticular, setTransferParticular] = useState<boolean>(false)
   const [transferExclusive, setTransferExclusive] = useState<boolean>(false)
   const [transferShared, setTransferShared] = useState<boolean>(false)
+
+  const [itinerary, setItinerary] = useState<ItineraryProps | null>()
   const [itineraries, setItineraries] = useState<ItineraryProps[]>([])
+  const [numberOfDays, setNumberOfDays] = useState<number>(0)
+  const [valuePerPerson, setValuePerPerson] = useState<number>(0)
+  const [category, setCategory] = useState<CategoryProps | null>()
   const [categories, setCategories] = useState<CategoryProps[]>([])
+  const [uf, setUf] = useState<string>('')
+  const [city, setCity] = useState<string>('')
+
   const [filteredItineraries, setFilteredItineraries] = useState<
-    Array<ItineraryProps[]>
+    ItineraryProps[]
   >([])
+
+  const [ufItems, setUfItems] = useState([{ index: 0, value: '' }])
+  const [cityItems, setCityItems] = useState([{ index: 0, value: '' }])
+  const [categoryItems, setCategoryItems] = useState([{ index: 0, value: '' }])
+
   const [itineraryItems, setItineraryItems] = useState<ItineraryItem[]>([
     { id: '', uf: '', city: '', category: '' },
   ])
@@ -83,9 +97,20 @@ export function NewPackage() {
         setItineraries(response.data)
       })
       .catch((error) => {
-        console.log('Error getting itineraries.', error)
+        console.log('Error getting accommodations.', error)
       })
   }, [])
+
+  // useEffect(() => {
+  //   const filtered = itineraries.filter((itinerary) => {
+  //     return (
+  //       itinerary.accommodation.city === city &&
+  //       (category ? itinerary.category.id === category.id : true)
+  //     )
+  //   })
+
+  //   setFilteredItineraries(filtered)
+  // }, [itineraries, city, category])
 
   function validateFormData(formData: PackageInputProps) {
     try {
@@ -108,27 +133,20 @@ export function NewPackage() {
     setIsActive('active')
     setName('')
     setDescription('')
+    setNumberOfDays(0)
+    setValuePerPerson(0)
     setItineraryItems([{ id: '', uf: '', city: '', category: '' }])
+    setCategory(null)
+    setItinerary(null)
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
 
-    const selectedItineraryIds = itineraryItems.map((item) => item.id)
+    const date = new Date()
+    const formattedDepartureDate = date.toISOString()
 
-    const selectedItineraries = itineraries.filter((itinerary) =>
-      selectedItineraryIds.includes(itinerary.id),
-    )
-
-    const sumOfNumberOfDays = selectedItineraries.reduce(
-      (acc, itinerary) => acc + itinerary.numberOfDays,
-      0,
-    )
-
-    const backDate = new Date(
-      new Date(departureDate).getTime() +
-        sumOfNumberOfDays * 24 * 60 * 60 * 1000,
-    )
+    console.log(formattedDepartureDate)
 
     const formData = {
       isActive,
@@ -139,12 +157,17 @@ export function NewPackage() {
         departureDate instanceof Date
           ? departureDate.toISOString()
           : departureDate,
-      backDate: backDate instanceof Date ? backDate.toISOString() : backDate,
+      backDate:
+        departureDate instanceof Date
+          ? departureDate.toISOString()
+          : departureDate,
       transferParticular,
       transferExclusive,
       transferShared,
       itineraries: itineraryItems.map((item) => item.id),
     }
+
+    console.log('formData: ', formData)
 
     const isFormDataValid = validateFormData(formData)
 
@@ -201,6 +224,28 @@ export function NewPackage() {
     }
   }
 
+  // useEffect(() => {
+  //   updateFilteredItineraries()
+  // }, [uf, city, category])
+
+  function handleCategoryChange(value: string, position: number) {
+    const selectedCategory = categories.find(
+      (category) => category.name === value,
+    )
+
+    if (selectedCategory) {
+      setItineraryItems((prevItems) => {
+        const updatedItems = [...prevItems]
+        updatedItems[position] = {
+          ...updatedItems[position],
+          category: selectedCategory.id,
+        }
+        console.log(updatedItems)
+        return updatedItems
+      })
+    }
+  }
+
   function addNewItineraryItem() {
     setItineraryItems([
       ...itineraryItems,
@@ -215,76 +260,88 @@ export function NewPackage() {
     setItineraryItems(updatedItineraryItems)
   }
 
-  function handleUfChange(value: string, index: number) {
-    const selectedUf = value
+  function updateFilteredItineraries() {
+    const filteredItineraries = itineraries.filter((itinerary) => {
+      // const isUfMatch = itinerary.accommodation. === uf
+      // const isCityMatch = itinerary.accommodation.city === city
+      const isCategoryMatch = itinerary.category.id === category?.id
 
-    if (selectedUf) {
-      const updatedItineraryItems = [...itineraryItems]
-      updatedItineraryItems[index] = {
-        ...updatedItineraryItems[index],
-        uf: selectedUf,
-      }
-      setItineraryItems(updatedItineraryItems)
-    }
+      console.log(category?.id)
+
+      return isCategoryMatch
+    })
+
+    setFilteredItineraries(filteredItineraries)
+    console.log(filteredItineraries)
   }
 
-  function handleCityChange(value: string, index: number) {
-    const selectedCity = value
+  useEffect(() => {
+    updateFilteredItineraries()
+  }, [itineraryItems])
 
-    if (selectedCity) {
-      const updatedItineraryItems = [...itineraryItems]
-      updatedItineraryItems[index] = {
-        ...updatedItineraryItems[index],
-        city: selectedCity,
-      }
-      setItineraryItems(updatedItineraryItems)
-    }
-  }
+  console.log(itineraryItems)
 
-  function handleCategoryChange(value: string, index: number) {
-    const selectedCategory = categories.find(
-      (category) => category.name === value,
+  function populateStates(item: ItineraryItem) {
+    const updatedUfItems = ufItems.map((ufItem) => ({ ...ufItem }))
+    const updatedCityItems = cityItems.map((cityItem) => ({ ...cityItem }))
+    const updatedCategoryItems = categoryItems.map((categoryItem) => ({
+      ...categoryItem,
+    }))
+
+    const ufIndex = updatedUfItems.findIndex(
+      (ufItem) => ufItem.value === item.uf,
     )
-
-    if (selectedCategory) {
-      const updatedItineraryItems = [...itineraryItems]
-      updatedItineraryItems[index] = {
-        ...updatedItineraryItems[index],
-        category: selectedCategory.id,
-      }
-      setItineraryItems(updatedItineraryItems)
-
-      const filtered = itineraries.filter((itinerary) => {
-        return (
-          itinerary.accommodation.city === updatedItineraryItems[index].city &&
-          (selectedCategory
-            ? itinerary.category.id === selectedCategory.id
-            : true)
-        )
-      })
-
-      const updatedFilteredItineraries = [...filteredItineraries]
-      updatedFilteredItineraries[index] = filtered
-      setFilteredItineraries(updatedFilteredItineraries)
+    if (ufIndex === -1) {
+      const newIndex = updatedUfItems.length
+      updatedUfItems.push({ index: newIndex, value: item.uf })
     }
+
+    const cityIndex = updatedCityItems.findIndex(
+      (cityItem) => cityItem.value === item.city,
+    )
+    if (cityIndex === -1) {
+      const newIndex = updatedCityItems.length
+      updatedCityItems.push({ index: newIndex, value: item.city })
+    }
+
+    const categoryIndex = updatedCategoryItems.findIndex(
+      (categoryItem) => categoryItem.value === item.category,
+    )
+    if (categoryIndex === -1) {
+      const newIndex = updatedCategoryItems.length
+      updatedCategoryItems.push({ index: newIndex, value: item.category })
+    }
+
+    console.log(updatedUfItems)
+    console.log(updatedCityItems)
+    console.log(updatedCategoryItems)
+
+    setUfItems(updatedUfItems)
+    setCityItems(updatedCityItems)
+    setCategoryItems(updatedCategoryItems)
   }
 
-  function handleItineraryChange(value: string, index: number) {
+  function handleItineraryChange(value: string, position: number) {
     const selectedItinerary = itineraries.find(
       (itinerary) => itinerary.name === value,
     )
 
     if (selectedItinerary) {
-      const updatedItineraryItems = [...itineraryItems]
-      updatedItineraryItems[index] = {
-        ...updatedItineraryItems[index],
-        id: selectedItinerary.id,
-      }
-      setItineraryItems(updatedItineraryItems)
+      setItineraryItems((prevItems) => {
+        const updatedItems = [...prevItems]
+        updatedItems[position] = {
+          id: selectedItinerary.id,
+          uf: selectedItinerary.accommodation.zipCode,
+          city: selectedItinerary.accommodation.city,
+          category: selectedItinerary.category.id,
+        }
+        populateStates(updatedItems[position]) // Chamar a função populateStates com o item atualizado
+        return updatedItems
+      })
     }
   }
 
-  console.log(filteredItineraries[0])
+  console.log(itineraryItems)
 
   return (
     <div className="flex h-screen w-full">
@@ -377,13 +434,17 @@ export function NewPackage() {
                           <div className="grid grid-cols-2 gap-6">
                             <Select
                               title="Estado"
-                              data={Object.keys(cities).map((id) => ({
-                                id,
-                                name: id,
+                              data={Object.keys(cities).map((name, i) => ({
+                                name,
+                                i,
                               }))}
                               value={itineraryItems[index].uf || ''}
                               onChange={(value: string) =>
-                                handleUfChange(value, index)
+                                setItineraryItems((prevItems) => {
+                                  const updatedItems = [...prevItems]
+                                  updatedItems[index].uf = value
+                                  return updatedItems
+                                })
                               }
                             />
 
@@ -397,7 +458,11 @@ export function NewPackage() {
                               }))}
                               value={itineraryItems[index].city || ''}
                               onChange={(value: string) =>
-                                handleCityChange(value, index)
+                                setItineraryItems((prevItems) => {
+                                  const updatedItems = [...prevItems]
+                                  updatedItems[index].city = value
+                                  return updatedItems
+                                })
                               }
                             />
                           </div>
@@ -417,16 +482,10 @@ export function NewPackage() {
 
                             <Select
                               title="Itinerário"
-                              data={
-                                filteredItineraries[index]
-                                  ? filteredItineraries[index].map(
-                                      (itinerary) => ({
-                                        id: itinerary.id,
-                                        name: itinerary.name,
-                                      }),
-                                    )
-                                  : []
-                              }
+                              data={filteredItineraries.map((itinerary) => ({
+                                id: itinerary.id,
+                                name: itinerary.name,
+                              }))}
                               value={itineraryItems[index].id || ''}
                               onChange={(value: string) =>
                                 handleItineraryChange(value, index)

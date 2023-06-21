@@ -41,8 +41,6 @@ export function NewItinerary() {
   const [description, setDescription] = useState<string>('')
   const [numberOfDays, setNumberOfDays] = useState<number>(0)
   const [valuePerPerson, setValuePerPerson] = useState<number>(0)
-  const [content, setContent] = useState<string[]>([])
-  const [classification, setClassification] = useState<string[]>([])
   const [category, setCategory] = useState<CategoryProps | null>()
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const [accommodation, setAccommodation] =
@@ -343,7 +341,7 @@ export function NewItinerary() {
                     })}
                     <a
                       onClick={addNewContentItem}
-                      className="flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
+                      className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
                     >
                       <Plus size={16} /> Adicionar
                     </a>
@@ -379,7 +377,7 @@ export function NewItinerary() {
                     })}
                     <a
                       onClick={addNewClassificationItem}
-                      className="flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
+                      className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600"
                     >
                       <Plus size={16} /> Adicionar
                     </a>

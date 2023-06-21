@@ -54,7 +54,7 @@ const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
                 className="relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none"
                 defaultChecked
               >
-                <SelectRadix.ItemText></SelectRadix.ItemText>
+                <SelectRadix.ItemText>Selecione</SelectRadix.ItemText>
               </SelectRadix.Item>
               {data.map((value, i) => (
                 <SelectRadix.Item
