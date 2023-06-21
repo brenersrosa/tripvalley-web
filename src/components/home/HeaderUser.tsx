@@ -15,17 +15,18 @@ export function HeaderUser() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
   return (
-    <nav className="fixed right-0 top-0 z-10 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-10 lg:px-40">
+    <nav className="fixed right-0 top-0 z-50 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-10 lg:px-40">
       <div className="flex select-none items-center">
-        <h1 className="text-xl font-bold text-blue-500 md:text-4xl">
+        <a href="/" className="text-xl font-bold text-blue-500 md:text-4xl">
           TRIP<span className="text-base text-white md:text-2xl">valley</span>
-        </h1>
+        </a>
       </div>
       <div className="flex items-center md:hidden">
         <DropdownMenu onOpenChange={(open) => setIsMobileMenuOpen(open)}>
           <DropdownMenuTrigger
             className="cursor-pointer text-gray-50"
             onClick={toggleMobileMenu}
+            aria-expanded={isMobileMenuOpen}
           >
             <List size={24} />
           </DropdownMenuTrigger>
@@ -37,6 +38,7 @@ export function HeaderUser() {
                     (window.location.href = 'https://example.com')
                   }
                   className="flex flex-row text-gray-50"
+                  aria-label="Botão para navegar até a página Vantagens"
                 >
                   <ThumbsUp className="my-auto mr-2" size={18} />
                   Vantagens
@@ -46,6 +48,7 @@ export function HeaderUser() {
                     (window.location.href = 'https://example.com')
                   }
                   className="flex flex-row text-gray-50"
+                  aria-label="Botão para navegar até a página Pacotes"
                 >
                   <Package className="my-auto mr-2" size={18} />
                   Pacotes
@@ -55,6 +58,7 @@ export function HeaderUser() {
                     (window.location.href = 'https://example.com')
                   }
                   className="flex flex-row text-gray-50"
+                  aria-label="Botão para navegar até a página Serviços"
                 >
                   <Handbag className="my-auto mr-2" size={18} />
                   Serviços
@@ -64,6 +68,7 @@ export function HeaderUser() {
                     (window.location.href = 'https://example.com')
                   }
                   className="flex flex-row text-gray-50"
+                  aria-label="Botão para navegar até a página Contatos"
                 >
                   <Phone className="my-auto mr-2" size={18} />
                   Contatos
@@ -77,30 +82,35 @@ export function HeaderUser() {
         <a
           href="#"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
+          aria-label="Botão para navegar até a página Vantagens"
         >
           Vantagens
         </a>
         <a
           href="#"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
+          aria-label="Botão para navegar até a página Pacotes"
         >
           Pacotes
         </a>
         <a
           href="#"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
+          aria-label="Botão para navegar até a página Serviços"
         >
           Serviços
         </a>
         <a
           href="#"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
+          aria-label="Botão para navegar até a página Contatos"
         >
           Contatos
         </a>
         <Link
           to="/signin"
           className="ml-4 rounded-lg bg-blue-500 px-12 py-3 font-semibold text-gray-50 transition hover:bg-blue-600"
+          aria-label="Botão para navegar até a página de Login"
         >
           Entrar
         </Link>

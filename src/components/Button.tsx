@@ -14,23 +14,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const ButtonBase: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+  // @ts-ignore
   { icon, title, variant = 'default', onClick, ...rest },
   ref,
 ) => {
   return (
     <button
       className={clsx(
-        'flex h-14 items-center justify-center gap-2 rounded-lg text-white transition-colors',
+        'flex h-14 items-center justify-center gap-2 rounded-lg bg-blue-500 text-white transition-colors hover:bg-blue-600',
         {
           'w-14': !title,
           'w-full': title,
-          'bg-blue-500 hover:bg-blue-600': variant === 'default',
-          'bg-green-500 hover:bg-green-600': variant === 'save',
         },
       )}
       onClick={onClick}
-      ref={ref}
-      {...rest}
     >
       {icon}
       {title}

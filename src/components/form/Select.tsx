@@ -60,7 +60,7 @@ const SelectBase: ForwardRefRenderFunction<HTMLSelectElement, SelectProps> = (
                 <SelectRadix.Item
                   key={`${value}-${i}`}
                   value={typeof value === 'object' ? value.name : value}
-                  className="relative flex select-none items-center px-4 py-4 text-gray-600 hover:bg-gray-100 focus:outline-none"
+                  className="relative flex cursor-pointer select-none items-center border border-transparent px-4 py-4 text-gray-600 hover:rounded-md hover:border hover:border-blue-500 hover:bg-gray-100 focus:outline-none"
                 >
                   <SelectRadix.ItemText>
                     {typeof value === 'object' ? value.name : value}
