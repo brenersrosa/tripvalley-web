@@ -13,7 +13,6 @@ import '../../styles/checkout.css'
 
 import { api } from '../../lib/api'
 import { Button } from '../Button'
-import { CaretLeft } from 'phosphor-react'
 import { Footer } from '../Footer'
 
 export function PaymentForm() {
@@ -29,7 +28,7 @@ export function PaymentForm() {
       const decodedToken: { id: string } = jwtDecode(token) // Decodifica o token JWT para obter o ID do usuário
       const userId = decodedToken.id // Obtém o ID do usuário
       // Enviar os dados para o banco de dados
-      const { packageValue, companionsArray, id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
+      const { packageValue, companionsArray = [], id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
       const response = await api.post('/orders', {
         // Faz um post para a API
         status: 'accept', // Status para api reconhecer
