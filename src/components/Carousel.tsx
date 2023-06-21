@@ -12,35 +12,35 @@ const sliderData = [
     title: 'Circuito Religioso',
     imagePath: '../src/assets/carousel/image-2.svg',
     description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Explore uma jornada espiritual e mergulhe na rica história religiosa deste circuito. Descubra santuários, templos e locais sagrados que irão inspirar sua fé e proporcionar momentos de reflexão profunda.',
   },
   {
     id: 2,
     title: 'Vale histórico',
     imagePath: 'src/assets/carousel/image-1.svg',
     description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Viaje de volta no tempo e descubra as raízes históricas deste belo vale. Explore cidades encantadoras, casarões coloniais e monumentos que contam a história fascinante dessa região, mergulhando em sua herança cultural.',
   },
   {
     id: 3,
     title: 'Serra da Mantiqueira',
     imagePath: 'src/assets/carousel/image-4.svg',
     description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Encante-se com a majestosa Serra da Mantiqueira, um paraíso para os amantes da natureza. Explore trilhas deslumbrantes, cachoeiras exuberantes e desfrute de vistas panorâmicas deslumbrantes em meio a essa cadeia montanhosa.',
   },
   {
     id: 4,
     title: 'Rios do Vale',
     imagePath: 'src/assets/carousel/image-2.svg',
     description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Deixe-se envolver pela serenidade dos rios que cruzam essa região. Desfrute de passeios de barco, pesca tranquila e momentos relaxantes junto às margens desses cursos d água encantadores, conectando-se com a natureza em sua forma mais pura.',
   },
   {
     id: 5,
     title: 'Litoral Norte',
     imagePath: 'src/assets/carousel/image-3.svg',
     description:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Relaxe nas praias paradisíacas e aproveite o sol no vibrante Litoral Norte. Desfrute de paisagens deslumbrantes, mergulhos refrescantes no mar e atividades aquáticas emocionantes, tornando suas férias memoráveis e cheias de diversão.',
   },
 ]
 

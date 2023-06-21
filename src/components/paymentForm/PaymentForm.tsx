@@ -12,6 +12,9 @@ import jwtDecode from 'jwt-decode'
 import '../../styles/checkout.css'
 
 import { api } from '../../lib/api'
+import { Button } from '../Button'
+import { CaretLeft } from 'phosphor-react'
+import { Footer } from '../Footer'
 
 export function PaymentForm() {
   const [errorMessage, setErrorMessage] = useState('') // Estado para controlar a mensagem de erro
@@ -25,25 +28,22 @@ export function PaymentForm() {
       const token = cookies['tripvalley.token'] // Obtém o valor do cookie 'tripvalley.token'
       const decodedToken: { id: string } = jwtDecode(token) // Decodifica o token JWT para obter o ID do usuário
       const userId = decodedToken.id // Obtém o ID do usuário
-
-      console.log('ID do usuário:', userId)
-
       // Enviar os dados para o banco de dados
-      const { packageValue, id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
+      const { packageValue, companionsArray, id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
       const response = await api.post('/orders', {
         // Faz um post para a API
-        status: 'accept', // Preciso entender como funciona esse field
+        status: 'accept', // Status para api reconhecer
         userId,
         packageId: id, // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
         totalValue: packageValue,
-        companions: [], // Preciso entender essa companions também
-        // Interesante talvez passar o nome do pacote que o usuário comprou, "productName" mas precisa alterar no backend para receber isso
+        companions: companionsArray, // Aqui entra o array em JSON para armazenar no banco caso tenha acompanhantes
       })
-      console.log('Resposta da API:', response.data) // ver  oque está recebendo
+      console.log('Resposta da API:', response.data) // Visualizar a resposta da API
 
       // Limpar o cache depois da compra
-      localStorage.removeItem('productName')
-      localStorage.removeItem('productValue')
+      localStorage.removeItem('id')
+      localStorage.removeItem('packageValue')
+      localStorage.removeItem('companionsArray')
       navigate('/successful') // Redirecionar para a página de sucesso
     } catch (error) {
       console.log('Erro ao enviar os dados para o banco de dados:', error)
@@ -77,19 +77,11 @@ export function PaymentForm() {
     fetchPackageDetails()
   }, [id])
 
-  console.log(`Informações do produto:
-  ----------------------
-  Valor total: ${packageValue}
-  Número de adultos: ${adults}
-  Número de crianças: ${children}
-  Tipo de transferência: ${transferType}
-  ID: ${id}
-  Nome do pacote: ${packageName}
-  Descrição do pacote: ${packageDescription}
-  imagePath: ${packageImage}`)
-
   return (
-    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-200 py-10">
+    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-200 pt-5">
+      <div className="mb-3  w-[15%]">
+        <Button title="Voltar" onClick={() => navigate(-1)} />
+      </div>
       {errorMessage && (
         <div className="mb-4 flex flex-col items-center gap-2 rounded-xl border-2 border-gray-300 bg-red-500 px-7 py-4 font-normal text-gray-50">
           <AlertDialog>{errorMessage}</AlertDialog>
@@ -118,12 +110,16 @@ export function PaymentForm() {
             <p className="text-gray-600">{packageName}</p>
             <h2 className="mt-2 text-lg font-semibold">Descrição</h2>
             <p className="max-w-xs text-gray-600">{packageDescription}</p>
-            <h2 className="mt-2 text-lg font-semibold">Quantidad de adultos</h2>
+            <h2 className="mt-2 text-lg font-semibold">
+              Quantidade de adultos
+            </h2>
             <p className="max-w-xs text-gray-600">{adults}</p>
             <h2 className="mt-2 text-lg font-semibold">
               Quantidade de crianças
             </h2>
             <p className="max-w-xs text-gray-600">{children || '0'}</p>
+            <h2 className="mt-2 text-lg font-semibold">Tipo de transfer</h2>
+            <p className="max-w-xs text-gray-600">{transferType || '0'}</p>
           </div>
           <div className="mt-2">
             <h2 className="text-lg font-semibold">Valor do pacote</h2>
@@ -161,17 +157,16 @@ export function PaymentForm() {
             image={packageImage}
             description={packageDescription}
             currency="BRL"
-            reconfigureOnUpdate={true}
             name={packageName}
             label="Pagar com cartão de crédito"
-            alipay={true}
             locale="auto"
-            bitcoin={true}
-            zipCode={true}
             allowRememberMe={true}
             panelLabel="Valor"
           />
         </div>
+      </div>
+      <div className="mt-10 border-t-2 border-gray-300">
+        <Footer />
       </div>
     </div>
   )

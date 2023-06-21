@@ -60,7 +60,7 @@ export function UserPackages() {
     )
   }, [packageSelected])
 
-  // Função assíncrona para buscar dados da API
+  // Buscar dados da API
   useEffect(() => {
     const startTime = Date.now()
 
@@ -151,7 +151,7 @@ export function UserPackages() {
 
     if (adults + children === 1) {
       navigate('/payment', {
-        state: { packageValue, adults, transferType, id },
+        state: { packageValue, adults, transferType, companionsArray: [], id },
       })
     } else {
       navigate('/companions', {
@@ -236,7 +236,7 @@ export function UserPackages() {
                       {itinerary.itinerary.accommodation.name}
                     </h2>
                     <h3 className="text-justify text-base font-normal leading-6">
-                      {itinerary.itinerary.description}
+                      {itinerary.itinerary.accommodation.description}
                     </h3>
 
                     <div className="flex flex-row gap-2">
@@ -260,9 +260,9 @@ export function UserPackages() {
                     </div>
                   </div>
 
-                  <div className="flex">
+                  <div className="flex h-[200px] w-full">
                     <img
-                      className="max-w-xs rounded-xl object-cover"
+                      className="h-full w-full overflow-hidden rounded-lg object-cover"
                       src={itinerary.itinerary.accommodation.imagePath}
                       alt=""
                     />
@@ -429,14 +429,18 @@ export function UserPackages() {
                 </fieldset>
               </div>
               <div className="flex flex-col gap-2">
-                <h2 className="text-gray-700">
-                  Crianças até 3 anos:
-                  <span className="font-bold text-blue-500"> GRÁTIS</span>
-                </h2>
-                <h2 className="text-gray-700">
-                  Crianças entre 4 e 10 anos:
-                  <span className="font-bold text-blue-500"> 10% OFF</span>
-                </h2>
+                <div>
+                  <h2 className="text-gray-700">
+                    Crianças até 3 anos:
+                    <span className="font-bold text-blue-500"> GRÁTIS</span>
+                  </h2>
+                </div>
+                <div>
+                  <h2 className="text-gray-700">
+                    Crianças entre 4 e 10 anos:
+                    <span className="font-bold text-blue-500"> 10% OFF</span>
+                  </h2>
+                </div>
               </div>
             </div>
 
@@ -471,15 +475,19 @@ export function UserPackages() {
       ) : (
         <div className="flex h-screen items-center justify-center bg-gray-200">
           <div className="text-center">
-            <h2 className="mb-4 text-2xl font-bold text-gray-800">
-              Pacote não encontrado...
-            </h2>
-            <a
-              href="/"
-              className="rounded bg-blue-500 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-600"
-            >
-              Voltar à página inicial
-            </a>
+            <div>
+              <h2 className="mb-4 text-2xl font-bold text-gray-800">
+                Pacote não encontrado...
+              </h2>
+            </div>
+            <div>
+              <a
+                href="/"
+                className="rounded bg-blue-500 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-600"
+              >
+                Voltar à página inicial
+              </a>
+            </div>
           </div>
         </div>
       )}

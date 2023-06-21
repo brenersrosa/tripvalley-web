@@ -11,6 +11,7 @@ export default {
         home: "url('/src/assets/background/home.svg')",
         locations: "url('/src/assets/background/locations.svg')",
         notFound: "url('/src/assets/background/world.svg')",
+        companions: "url('/src/assets/background/locations.svg')",
       },
     },
   },

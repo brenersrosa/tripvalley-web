@@ -22,6 +22,7 @@ export function HeroLocation({
   backDate,
 }: packageHeroProps) {
   const priceDiscount = (totalPackageValue * 1.15).toFixed(2)
+
   return (
     <div className="z-0 hidden select-none md:block lg:block">
       <div className="brightness-90 filter">
@@ -36,11 +37,13 @@ export function HeroLocation({
           <div className="space-y-1">
             <h1 className="w-auto text-gray-50">
               Conheça
-              <h2 className="text-yellow-400"> {locationName}</h2>
+              <span className="text-yellow-400"> {locationName}</span>
             </h1>
-            <h2 className={`${showDescription ? 'block' : 'hidden'}`}>
-              <h2 className="w-3/4 text-base font-normal">{description}</h2>
-            </h2>
+            {showDescription && (
+              <div className="w-3/4 text-base font-normal">
+                <span className="">{description}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -73,7 +76,7 @@ export function HeroLocation({
                 <ArrowsDownUp size={24} /> {backDate}
               </div>
               <div className="flex flex-col gap-1">
-                <h2 className="text-gray-600">Duraçao:</h2>
+                <h2 className="text-gray-600">Duração:</h2>
                 <div className="flex  items-center justify-center rounded-lg bg-green-500 px-20 py-4 text-xl font-medium text-white">
                   {numberOfDays} dias
                 </div>
