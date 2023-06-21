@@ -1,9 +1,15 @@
 import clsx from 'clsx'
+import { format } from 'date-fns'
 import {
+  ArrowDown,
+  ArrowUp,
   Barricade,
   Binoculars,
+  Bus,
+  Car,
   MagnifyingGlass,
   Plus,
+  Taxi,
   XCircle,
 } from 'phosphor-react'
 import { useEffect, useState } from 'react'
@@ -25,7 +31,7 @@ import { Input } from '../../components/form/Input'
 import { Select } from '../../components/form/Select'
 
 export function Packages() {
-  const [pkg, setPkg] = useState<PackageProps[]>([])
+  const [pkgs, setPkgs] = useState<PackageProps[]>([])
   const [cities, setCities] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCity, setSelectedCity] = useState('')
@@ -40,7 +46,7 @@ export function Packages() {
     api
       .get('/packages')
       .then((response) => {
-        setPkg(response.data)
+        setPkgs(response.data)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -49,7 +55,7 @@ export function Packages() {
   }, [])
 
   useEffect(() => {
-    const result = pkg.reduce((cities: string[], items) => {
+    const result = pkgs.reduce((cities: string[], items) => {
       items.itineraries.forEach((item) => {
         const city = item.itinerary.accommodation.city
         if (!cities.includes(city)) {
@@ -61,9 +67,9 @@ export function Packages() {
     }, [])
 
     setCities(result)
-  }, [pkg])
+  }, [pkgs])
 
-  const filteredPackages = pkg.filter((item) => {
+  const filteredPackages = pkgs.filter((item) => {
     const isSearchMatch = item.name
       .toLowerCase()
       .includes(searchText.toLowerCase())
@@ -86,33 +92,116 @@ export function Packages() {
 
   const hasResults = filteredPackages.length > 0
 
+  // async function handleToggleIsActive(pkgId: string) {
+  //   console.log(pkgId)
+  //   const updatedPackages = pkgs.map(async (pkg) => {
+  //     if (pkg.id === pkgId) {
+  //       console.log(pkg.id)
+  //       console.log(pkgId)
+  //       const newStatus = pkg.isActive === 'active' ? 'inactive' : 'active'
+
+  //       try {
+  //         await api.put(`/packages/${pkg.id}`, {
+  //           ...pkg,
+  //           isActive: newStatus,
+  //           name: pkg.name,
+  //           description: pkg.description,
+  //           imagePath: pkg.imagePath,
+  //           departureDate:
+  //             pkg.departureDate instanceof Date
+  //               ? pkg.departureDate.toISOString()
+  //               : pkg.departureDate,
+  //           backDate:
+  //             pkg.backDate instanceof Date
+  //               ? pkg.backDate.toISOString()
+  //               : pkg.backDate,
+  //           transferParticular: pkg.transferParticular,
+  //           transferExclusive: pkg.transferExclusive,
+  //           transferShared: pkg.transferShared,
+  //           itineraries: pkg.itineraries.map((itinerary) => ({
+  //             ...itinerary,
+  //             id: itinerary.itinerary.id,
+  //             isActive: itinerary.itinerary.isActive,
+  //             name: itinerary.itinerary.name,
+  //             description: itinerary.itinerary.description,
+  //             numberOfDays: Number(itinerary.itinerary.numberOfDays),
+  //             valuePerPerson: Number(itinerary.itinerary.valuePerPerson),
+  //             content: itinerary.itinerary.content,
+  //             classification: itinerary.itinerary.classification,
+  //             categoryId: itinerary.itinerary.category.id,
+  //             accommodationId: itinerary.itinerary.accommodation.id,
+  //           })),
+  //         })
+  //         console.log('Package updated successfully.')
+  //       } catch (error) {
+  //         toast.error('Erro ao atualizar os dados', {
+  //           position: 'top-right',
+  //           style: {
+  //             backgroundColor: colors.red[500],
+  //             color: colors.white,
+  //             fontSize: 16,
+  //             fontWeight: 500,
+  //             padding: 16,
+  //           },
+  //           icon: <XCircle size={40} weight="fill" className="text-gray-50" />,
+  //         })
+  //         console.log('Error updating package:', error)
+  //         return pkg
+  //       }
+  //       return {
+  //         ...pkg,
+  //         isActive: newStatus as 'active' | 'inactive',
+  //       } as PackageProps
+  //     }
+  //     return pkg
+  //   })
+
+  //   const updatedPackagesData = await Promise.all(updatedPackages)
+  //   setPkgs(updatedPackagesData)
+  // }
+
   async function handleToggleIsActive(pkgId: string) {
-    const updatedPackages = pkg.map(async (pkg) => {
+    const updatedPackages = pkgs.map(async (pkg) => {
       if (pkg.id === pkgId) {
         const newStatus = pkg.isActive === 'active' ? 'inactive' : 'active'
 
         try {
-          await api.put(`/packages/${pkg.id}`, {
+          const updatedPackage = {
             isActive: newStatus,
             name: pkg.name,
+            description: pkg.description,
+            imagePath: pkg.imagePath,
+            departureDate:
+              pkg.departureDate instanceof Date
+                ? pkg.departureDate.toISOString()
+                : pkg.departureDate,
+            backDate:
+              pkg.backDate instanceof Date
+                ? pkg.backDate.toISOString()
+                : pkg.backDate,
             transferParticular: pkg.transferParticular,
             transferExclusive: pkg.transferExclusive,
             transferShared: pkg.transferShared,
             itineraries: pkg.itineraries.map((itinerary) => ({
-              id: itinerary.itinerary.id,
+              ...itinerary,
+              itineraryId: itinerary.itinerary.id,
               isActive: itinerary.itinerary.isActive,
               name: itinerary.itinerary.name,
-              numberOfDays: Number(itinerary.itinerary.numberOfDays),
               description: itinerary.itinerary.description,
+              numberOfDays: Number(itinerary.itinerary.numberOfDays),
               valuePerPerson: Number(itinerary.itinerary.valuePerPerson),
               content: itinerary.itinerary.content,
               classification: itinerary.itinerary.classification,
               categoryId: itinerary.itinerary.category.id,
               accommodationId: itinerary.itinerary.accommodation.id,
             })),
-          })
+          }
+          console.log(updatedPackage)
+
+          await api.put(`/packages/${pkg.id}`, updatedPackage)
           console.log('Package updated successfully.')
         } catch (error) {
+          console.log('Error updating package:', error)
           toast.error('Erro ao atualizar os dados', {
             position: 'top-right',
             style: {
@@ -124,20 +213,21 @@ export function Packages() {
             },
             icon: <XCircle size={40} weight="fill" className="text-gray-50" />,
           })
-          console.log('Error updating package:', error)
           return pkg
         }
+
         return {
           ...pkg,
           isActive: newStatus as 'active' | 'inactive',
         } as PackageProps
       }
+
       return pkg
     })
 
     const updatedPackagesData = await Promise.all(updatedPackages)
-
-    setPkg(updatedPackagesData)
+    console.log('Updated packages:', updatedPackagesData)
+    setPkgs(updatedPackagesData)
   }
 
   return (
@@ -182,7 +272,7 @@ export function Packages() {
               </div>
             ) : (
               <>
-                {pkg.length === 0 ? (
+                {pkgs.length === 0 ? (
                   <div className="mx-28 flex max-h-full flex-1 flex-col items-center justify-center gap-8">
                     <Barricade size={40} className="text-gray-800" />
                     <span className="max-w-xl text-center leading-relaxed text-gray-600">
@@ -203,48 +293,109 @@ export function Packages() {
                   <>
                     {hasResults ? (
                       <div className="mx-28 max-h-full overflow-auto">
-                        <table className="w-full min-w-[620px] border-collapse">
-                          <thead className="border-[1px] border-gray-200">
-                            <tr>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                        <table className="w-full min-w-[620px] table-auto border-collapse">
+                          <thead className="sticky top-0 bg-gray-200">
+                            <tr className="bg-gray-50">
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Nome
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Cidades
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
+                                Datas
+                              </th>
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Qtd. de dias
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600">
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
+                                Transfer
+                              </th>
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600">
                                 Status
                               </th>
-                              <th className="bg-white p-4 text-left text-sm leading-relaxed text-gray-600"></th>
+                              <th className="p-4 text-left text-sm leading-relaxed text-gray-600"></th>
                             </tr>
                           </thead>
                           <tbody>
                             {filteredPackages.map((pkg) => (
-                              <tr key={pkg.id}>
-                                <td className="border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                              <tr
+                                key={pkg?.id}
+                                className="bg-white hover:bg-gray-100"
+                              >
+                                <td className="border-b-[1px] border-l-[1px] border-t-[1px] border-solid border-gray-100  p-4 leading-relaxed text-gray-600">
                                   {pkg.name}
                                 </td>
-                                <td className="w-[512px] border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100  p-4 leading-relaxed">
                                   <div className="flex gap-2">
-                                    {pkg.itineraries.map((item, i) => (
-                                      <div
-                                        key={`${item}-${i}`}
-                                        className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200 bg-white p-1 text-center text-sm text-gray-600"
-                                      >
-                                        {item.itinerary.accommodation.city}
-                                      </div>
-                                    ))}
+                                    {Array.from(
+                                      new Set(
+                                        pkg.itineraries.map(
+                                          (item) =>
+                                            item.itinerary.accommodation.city,
+                                        ),
+                                      ),
+                                    )
+                                      .filter(
+                                        (city, index, array) =>
+                                          array.indexOf(city) === index,
+                                      )
+                                      .map((city, i) => (
+                                        <div
+                                          key={`${city}-${i}`}
+                                          className="line-clamp-1 w-[75px] rounded-sm border-[1px] border-gray-200  p-1 text-center text-sm text-gray-600"
+                                        >
+                                          {city}
+                                        </div>
+                                      ))}
                                   </div>
                                 </td>
-                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4 leading-relaxed text-gray-600">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100  p-4 leading-relaxed text-gray-600">
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <ArrowUp
+                                        size={12}
+                                        className="text-green-500"
+                                      />
+                                      <span className="text-sm">
+                                        {format(
+                                          new Date(pkg.departureDate),
+                                          'dd/MM/yyyy',
+                                        )}
+                                      </span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2">
+                                      <ArrowDown
+                                        size={12}
+                                        className="text-red-500"
+                                      />
+                                      <span className="text-sm">
+                                        {format(
+                                          new Date(pkg.backDate),
+                                          'dd/MM/yyyy',
+                                        )}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100  p-4 leading-relaxed text-gray-600">
                                   {pkg.itineraries
                                     .map((item) => item.itinerary.numberOfDays)
                                     .reduce((acc, number) => acc + number, 0)}
                                 </td>
-                                <td className="w-56 border-b-[1px] border-t-[1px] border-solid border-gray-100 bg-white p-4">
+                                <td className="border-b-[1px] border-t-[1px] border-solid border-gray-100  p-4 leading-relaxed text-gray-600">
+                                  <div className="flex w-full justify-between">
+                                    {!!pkg.transferParticular && (
+                                      <Car size={16} />
+                                    )}
+                                    {!!pkg.transferExclusive && (
+                                      <Taxi size={16} />
+                                    )}
+                                    {!!pkg.transferShared && <Bus size={16} />}
+                                  </div>
+                                </td>
+                                <td className="w-28 border-b-[1px] border-t-[1px] border-solid border-gray-100  p-4">
                                   <span
                                     className={clsx(
                                       'flex items-center gap-2 leading-relaxed text-gray-600 before:h-2 before:w-2 before:rounded-full',

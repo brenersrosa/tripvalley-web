@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import { MapPin } from 'phosphor-react'
 import { ButtonOptions } from '../ButtonOptions'
 
-import { Accommodation } from '../../schemas/accommodation.schema'
+import { AccommodationProps } from '../../@types/Accommodation'
 
 interface CardAccommodationProps {
-  accommodation: Accommodation
+  accommodation: AccommodationProps
   onToggleIsActive?: () => void
 }
 
