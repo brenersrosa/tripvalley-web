@@ -45,44 +45,54 @@ export function ButtonDialog({ icon, title, onClick }: ButtonProps) {
         // exemplo: http://localhost:5173/packages/5bda3790-638a-4bc8-bf19-f3b0423bcd1f
         navigate(`/packages/${packageId}`)
       } else {
-        // Pacote não encontrado
+        // Pacote não encontrado, preciso adiconar um alert para o usuário
         console.log('Pacote não encontrado')
       }
     } catch (error) {
-      // Erro ao busca o pacote
+      // Erro ao buscar o pacote preciso adiconar um alert para o usuário
       console.error('Erro ao buscar pacotes:', error)
     }
   }
 
+  // Função que encontra o pacote mais próximo com base no nome de pesquisa
   const findClosestPackage = (
     packages: Package[],
     searchName: string,
   ): Package => {
+    // Inicializa a variável do pacote mais próximo com o primeiro pacote do array
     const closestPackage = packages.reduce(
+      // Obtém a similaridade entre o nome do pacote mais próximo atual e o nome de pesquisa
       (closest: Package, current: Package) => {
         const closestSimilarity = getSimilarity(closest.name, searchName)
+        // Obtém a similaridade entre o nome do pacote atual e o nome de pesquisa
         const currentSimilarity = getSimilarity(current.name, searchName)
-
+        // Compara as similaridades para determinar qual pacote é mais similar ao nome de pesquisa
         if (currentSimilarity > closestSimilarity) {
-          return current
+          return current // O pacote atual é mais similar, então substitui o pacote mais próximo atual
         } else {
-          return closest
+          return closest // O pacote mais próximo atual ainda é mais similar
         }
       },
     )
 
-    return closestPackage
+    return closestPackage // Retorna o pacote mais próximo encontrado
   }
 
+  // Função que calcula a similaridade entre dois nomes
   const getSimilarity = (name1: string, name2: string): number => {
+    // Converte os nomes em conjuntos (sets) de palavras únicas
     const set1 = new Set(name1.split(' '))
     const set2 = new Set(name2.split(' '))
 
+    // Obtém a interseção entre os conjuntos de palavras
     const intersection = new Set([...set1].filter((x) => set2.has(x)))
+
+    // Obtém a união dos conjuntos de palavras
     const union = new Set([...set1, ...set2])
 
+    // Calcula a similaridade dividindo o tamanho da interseção pelo tamanho da união
     const similarity = intersection.size / union.size
-    return similarity
+    return similarity // Retorna a similaridade calculada
   }
 
   return (

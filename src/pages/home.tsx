@@ -20,7 +20,10 @@ export function Home() {
         <Carousel />
       </div>
 
-      <div className="flex flex-col gap-12 px-5 md:px-20  lg:px-40">
+      <div
+        className="flex flex-col gap-12 px-5 md:px-20  lg:px-40"
+        id="pacotes"
+      >
         <Title title="Tendências" />
         <CarouselTendencies />
       </div>
@@ -35,7 +38,7 @@ export function Home() {
             city="Aparecida do Norte • SP"
           />
           <Feedback
-            feedback="Ótima experiência com a Trip Valley, tudo muito organizado e bem planejado. Atendimento excelente da equipe da Trip Valley, opções de passeios incríveis e preços justos"
+            feedback="Ótima experiência com a Trip Valley, tudo muito organizado e bem planejado. Atendimento excelente da equipe da Trip Valley, opções de passeios incríveis e preços justos e muito fácil de realizar uma compra."
             image="src/assets/feedback/profile-B.svg"
             name="João Pedro"
             city="Cunha • SP"
@@ -74,7 +77,9 @@ export function Home() {
           />
         </div>
       </div>
-      <Footer></Footer>
+      <div id="contato">
+        <Footer></Footer>
+      </div>
     </div>
   )
 }

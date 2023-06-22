@@ -16,6 +16,7 @@ import {
 } from 'phosphor-react'
 
 import { format } from 'date-fns'
+
 import { HeroLocation } from '../components/HeroPackageDetails'
 import { HeaderUser } from '../components/home/HeaderUser'
 import { Title } from '../components/Title'
@@ -177,8 +178,9 @@ export function UserPackages() {
   const formatDate = (date: string | undefined): string => {
     return date ? format(new Date(date), 'dd/MM/yyyy') : ''
   }
-
+  // @ts-ignore
   const departureDateFormatted = formatDate(departureDate)
+  // @ts-ignore
   const backDateFormatted = formatDate(backDate)
 
   return (

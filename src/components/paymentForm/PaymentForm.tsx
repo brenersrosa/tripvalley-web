@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { AlertDialog } from '@radix-ui/react-alert-dialog'
 
-import StripeCheckout, { Token } from 'react-stripe-checkout'
+import StripeCheckout from 'react-stripe-checkout'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -17,10 +17,10 @@ import { Footer } from '../Footer'
 
 export function PaymentForm() {
   const [errorMessage, setErrorMessage] = useState('') // Estado para controlar a mensagem de erro
-  // Função para lidar com o pagamento
-  const handlePayment = async (token: Token): Promise<void> => {
-    console.log('Token do pagamento:', token)
 
+  // ================================================================================================
+  // Parte para realizar a venda do pacote utilizando o gateway de pagamento, envio de token, id, companions etc...
+  const handlePayment = async (): Promise<void> => {
     try {
       // Obter o token do cookie e decodificar para obter o ID do usuário
       const cookies = parseCookies() // Obtém todos os cookies
@@ -28,17 +28,15 @@ export function PaymentForm() {
       const decodedToken: { id: string } = jwtDecode(token) // Decodifica o token JWT para obter o ID do usuário
       const userId = decodedToken.id // Obtém o ID do usuário
       // Enviar os dados para o banco de dados
-      const { packageValue, companionsArray = [], id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
-      const response = await api.post('/orders', {
+      const { packageValue, companionsArrayData = [], id } = location.state // Obtém o "valor" do produto que foi pego da outra página, mas podemos passar mais infos "nomePacote" "dias" etc..
+      await api.post('/orders', {
         // Faz um post para a API
         status: 'accept', // Status para api reconhecer
         userId,
         packageId: id, // Preciso saber como fazer um push do pacote que o usuário selecionou para esse campo
         totalValue: packageValue,
-        companions: companionsArray, // Aqui entra o array em JSON para armazenar no banco caso tenha acompanhantes
+        companions: companionsArrayData, // Aqui entra o array em JSON para armazenar no banco caso tenha acompanhantes
       })
-      console.log('Resposta da API:', response.data) // Visualizar a resposta da API
-
       // Limpar o cache depois da compra
       localStorage.removeItem('id')
       localStorage.removeItem('packageValue')
@@ -52,7 +50,8 @@ export function PaymentForm() {
     }
   }
 
-  // Obter o nome e valor do produto apenas teste [deletar depois]
+  // ==========================================================================================================
+  // Parte para passar os dados para o card de detalhes dos pacotes.
   const navigate = useNavigate()
   const location = useLocation()
   const { packageValue, adults, children, transferType, id } = location.state

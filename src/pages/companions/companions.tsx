@@ -27,13 +27,12 @@ export function Companions() {
     // Converter a string JSON de volta para um array de objetos
     const parsedCompanions = JSON.parse(companionsJSON)
     // Converter a idade de cada acompanhante para número
-    const companionsWithNumberAge = parsedCompanions.map(
+    const companionsData = parsedCompanions.map(
       (companion: { age: number }) => ({
         ...companion,
         age: Number(companion.age),
       }),
     )
-    console.log(companionsWithNumberAge)
     // Navegar para a página de pagamento com os dados necessários
     navigate('/payment', {
       state: {
@@ -42,7 +41,7 @@ export function Companions() {
         id,
         adults,
         children,
-        companionsArray: companionsWithNumberAge,
+        companionsArrayData: companionsData,
       },
     })
   }
@@ -68,7 +67,7 @@ export function Companions() {
               name="document"
               className="w-full rounded-md border border-gray-300  px-4 py-3 outline-none focus-within:border-blue-500"
               maxLength={11}
-              placeholder="CPF (opcional)"
+              placeholder="CPF"
               onChange={(e) => handleFormChange(e, i)}
             />
             <input
