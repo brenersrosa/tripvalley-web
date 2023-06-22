@@ -68,30 +68,9 @@ export function Router() {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/payment"
-        element={
-          <ProtectedRoute>
-            <Payment />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/companions"
-        element={
-          <ProtectedRoute>
-            <Companions />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/successful"
-        element={
-          <ProtectedRoute>
-            <PaymentSuccess />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/payment" element={<Payment />} />
+      <Route path="/companions" element={<Companions />} />
+      <Route path="/successful" element={<PaymentSuccess />} />
       <Route path="/packages/:id" element={<UserPackages />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

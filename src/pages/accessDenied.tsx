@@ -4,7 +4,7 @@ import { Balancer } from 'react-wrap-balancer'
 
 import { Button } from '../components/Button'
 
-import heroImg from '../assets/not-found.svg'
+import heroImg from '../assets/access-denied.svg'
 
 export function AccessDenied() {
   const navigate = useNavigate()
@@ -31,8 +31,8 @@ export function AccessDenied() {
         />
       </div>
 
-      <div className="flex items-center justify-center">
-        <img src={heroImg} alt="Image 404" />
+      <div className="flex items-end justify-center">
+        <img src={heroImg} alt="Image 401" className="absolute bottom-0 w-96" />
       </div>
     </div>
   )
