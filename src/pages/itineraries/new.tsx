@@ -356,7 +356,7 @@ export function NewItinerary() {
                         <div key={index} className="flex items-center gap-4">
                           <Input
                             name="classification"
-                            placeholder={`${index + 1}˚ conteúdo`}
+                            placeholder={`${index + 1}1ª classificação`}
                             value={classificationItem.classification}
                             onChange={(e) =>
                               setClassificationItemValue(

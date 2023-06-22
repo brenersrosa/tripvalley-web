@@ -336,22 +336,22 @@ export function NewPackage() {
                 </div>
 
                 <div className="flex w-full flex-col gap-4">
-                  <span className="text-gray-600">Tipos de quartos</span>
+                  <span className="text-gray-600">Transfer</span>
                   <div className="grid grid-cols-4 gap-4">
                     <Checkbox
-                      title="Transporte particular"
+                      title="Particular"
                       checked={transferParticular}
                       onChange={() =>
                         setTransferParticular(!transferParticular)
                       }
                     />
                     <Checkbox
-                      title="Transporte exclusivo"
+                      title="Exclusivo"
                       checked={transferExclusive}
                       onChange={() => setTransferExclusive(!transferExclusive)}
                     />
                     <Checkbox
-                      title="Transporte compartilhado"
+                      title="Compartilhado"
                       checked={transferShared}
                       onChange={() => setTransferShared(!transferShared)}
                     />
