@@ -4,16 +4,30 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu'
-import { Handbag, List, Package, Phone, ThumbsUp } from 'phosphor-react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import {
+  Handbag,
+  List,
+  Package,
+  Phone,
+  SignOut,
+  ThumbsUp,
+} from 'phosphor-react'
+import { useContext, useState } from 'react'
+
+import { AuthContext } from '../../contexts/AuthContext'
 
 export function HeaderUser() {
+  const { user, signOut } = useContext(AuthContext)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const toggleMobileMenu = () => {
+  function handleSignOut() {
+    signOut()
+  }
+
+  function toggleMobileMenu() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
+
   return (
     <nav className="fixed right-0 top-0 z-50 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-10 lg:px-40">
       <div className="flex select-none items-center">
@@ -107,13 +121,22 @@ export function HeaderUser() {
         >
           Contatos
         </a>
-        <Link
-          to="/signin"
-          className="ml-4 rounded-lg bg-blue-500 px-12 py-3 font-semibold text-gray-50 transition hover:bg-blue-600"
-          aria-label="Botão para navegar até a página de Login"
-        >
-          Entrar
-        </Link>
+        {!user ? (
+          <a
+            href="/signin"
+            className="ml-4 rounded-lg bg-blue-500 px-12 py-3 font-semibold text-gray-50 transition hover:bg-blue-600"
+            aria-label="Botão para navegar até a página de Login"
+          >
+            Entrar
+          </a>
+        ) : (
+          <div className="flex items-center gap-4">
+            <span className="font-medium">{user.name}</span>
+            <button onClick={handleSignOut}>
+              <SignOut size={24} />
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   )

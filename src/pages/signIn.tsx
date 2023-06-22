@@ -9,15 +9,18 @@ import { AuthContext } from '../contexts/AuthContext'
 import logo from '../assets/logo-short.svg'
 
 export function SignIn() {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, user } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user?.role === 'adminstrator') {
       navigate('/accommodations')
+    } else if (isAuthenticated && user?.role === 'user') {
+      console.log('client')
+      navigate('/')
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, user, navigate])
 
   return (
     <>

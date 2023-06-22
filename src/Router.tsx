@@ -4,16 +4,16 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { NotFound } from './pages/404'
 import { Accommodations } from './pages/accommodations'
 import { NewAccommodation } from './pages/accommodations/new'
+import { Companions } from './pages/companions/companions'
 import { Home } from './pages/home'
 import { Itineraries } from './pages/itineraries'
 import { NewItinerary } from './pages/itineraries/new'
 import { Packages } from './pages/packages'
 import { NewPackage } from './pages/packages/new'
-import { SignIn } from './pages/signIn'
 import { Payment } from './pages/payment/payment'
 import { PaymentSuccess } from './pages/payment/successful'
+import { SignIn } from './pages/signIn'
 import { UserPackages } from './pages/userPackages'
-import { Companions } from './pages/companions/companions'
 
 export function Router() {
   return (

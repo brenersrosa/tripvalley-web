@@ -17,6 +17,8 @@ interface UserProps {
   id: string
   name: string
   email: string
+  roleId: string
+  role: string
 }
 
 interface AuthContextProps {
@@ -86,7 +88,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         api.defaults.headers.Authorization = `Bearer ${accessToken}`
 
-        navigate('/accommodations')
+        if (userLogged.role === 'administrator') {
+          navigate('/accommodations')
+        } else {
+          navigate('/')
+        }
       })
       .catch((error) => {
         toast.error(error.response.data.message, {
@@ -109,7 +115,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       destroyCookie(null, 'tripvalley.token')
       setUser(null)
-      navigate('/signin')
+      navigate('/')
     } catch (error) {
       console.error(error)
     }

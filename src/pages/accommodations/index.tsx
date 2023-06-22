@@ -1,9 +1,9 @@
 import {
-  Barricade,
-  Binoculars,
-  MagnifyingGlass,
-  Plus,
-  XCircle,
+    Barricade,
+    Binoculars,
+    MagnifyingGlass,
+    Plus,
+    XCircle,
 } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'

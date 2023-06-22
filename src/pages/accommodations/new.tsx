@@ -20,8 +20,8 @@ import citiesData from '../../utils/cities.json'
 
 import { MultilineInput } from '../../components/form/MultilineInput'
 import {
-  AccommodationsInputProps,
-  accommodationSchema,
+    AccommodationsInputProps,
+    accommodationSchema,
 } from '../../schemas/accommodation.schema'
 
 interface Errors {
