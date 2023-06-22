@@ -1,4 +1,5 @@
 import { ArrowsDownUp, Calendar } from 'phosphor-react'
+import { formatCurrency } from '../utils/formatCurrency'
 
 interface packageHeroProps {
   locationName: string
@@ -21,7 +22,7 @@ export function HeroLocation({
   departureDate,
   backDate,
 }: packageHeroProps) {
-  const priceDiscount = (totalPackageValue * 1.15).toFixed(2)
+  const priceDiscount = totalPackageValue * 1.15
 
   return (
     <div className="z-0 hidden select-none md:block lg:block">
@@ -55,7 +56,7 @@ export function HeroLocation({
                 <h2 className="text-gray-600">a partir de</h2>
                 <div className="flex flex-row gap-2 text-gray-400">
                   <span className="text-base font-light italic line-through">
-                    R$ {priceDiscount}
+                    {formatCurrency(priceDiscount)}
                   </span>
                   <span className="rounded-md bg-green-500 px-2 py-1 text-xs font-light italic text-gray-200">
                     {'15% desconto'}
@@ -64,7 +65,7 @@ export function HeroLocation({
               </div>
               <div>
                 <h2 className="text-xl font-bold text-gray-800 md:text-3xl lg:text-4xl">
-                  R$ {totalPackageValue}
+                  {formatCurrency(totalPackageValue)}
                 </h2>
                 <div>
                   <h2 className="text-gray-600">por pessoa</h2>

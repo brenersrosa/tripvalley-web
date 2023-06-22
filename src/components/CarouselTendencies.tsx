@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
 import { CaretLeft, CaretRight } from 'phosphor-react'
+import { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 
-import { SliderArrow } from './SliderArrow'
 import { CardTendencies } from './CardTendencies'
+import { SliderArrow } from './SliderArrow'
 
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
@@ -81,7 +81,7 @@ export function CarouselTendencies() {
                 lunch={lunch}
                 dinner={dinner}
                 // @ts-ignore
-                packageValue={totalValue.toFixed(2)}
+                packageValue={totalValue}
                 numberOfDays={ite.itinerary.numberOfDays}
                 city={ite.itinerary.accommodation.city}
               />

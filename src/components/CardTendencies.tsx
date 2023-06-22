@@ -1,5 +1,6 @@
 import { Bag, Calendar, Car, ForkKnife } from 'phosphor-react'
 import { Link } from 'react-router-dom'
+import { formatCurrency } from '../utils/formatCurrency'
 
 interface CardProps {
   id: string
@@ -36,7 +37,7 @@ export function CardTendencies({
   const foodBreakfast = breakfast ? 'Café da manhã' : ''
   const foodLunch = lunch ? 'Almoço' : ''
   const foodDinner = dinner ? 'Jantar' : ''
-  const priceDiscount = (packageValue * 1.15).toFixed(2)
+  const priceDiscount = packageValue * 1.15
 
   const renderFoodLabel = (foodText: string) => (
     <div className="rounded-md bg-green-500 px-1 py-1 text-xs font-light text-gray-200">
@@ -64,14 +65,14 @@ export function CardTendencies({
         <div className="text-base text-gray-600">a partir de</div>
         <div className="flex flex-row gap-2 text-gray-400">
           <span className="text-base font-light italic line-through">
-            R$ {priceDiscount}
+            {formatCurrency(priceDiscount)}
           </span>
           <span className="rounded-md bg-green-500 px-1 py-1 text-xs font-light italic text-gray-200">
             {'15% desconto'}
           </span>
         </div>
         <div className="mt-2 text-3xl font-bold text-gray-800">
-          R$ {packageValue + ''}
+          {formatCurrency(packageValue)}
         </div>
         <div className="mb-4 text-base text-gray-600">por pessoa</div>
         <div className="mb-4 flex flex-col gap-2">

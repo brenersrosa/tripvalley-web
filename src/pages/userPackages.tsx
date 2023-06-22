@@ -1,28 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useCallback, SetStateAction } from 'react'
+import { SetStateAction, useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { PackageProps } from '../@types/Package'
 import { api } from '../lib/api'
 
-import colors from 'tailwindcss/colors'
-import { toast } from 'react-hot-toast'
 import {
-  XCircle,
-  CaretRight,
   ArrowsDownUp,
-  UsersFour,
+  CaretRight,
   Handbag,
+  UsersFour,
+  XCircle,
 } from 'phosphor-react'
+import { toast } from 'react-hot-toast'
+import colors from 'tailwindcss/colors'
 
 import { format } from 'date-fns'
 
+import { Footer } from '../components/Footer'
 import { HeroLocation } from '../components/HeroPackageDetails'
-import { HeaderUser } from '../components/home/HeaderUser'
 import { Title } from '../components/Title'
 import { Input } from '../components/form/Input'
 import { TransferSelect } from '../components/form/TransferSelect'
-import { Footer } from '../components/Footer'
+import { HeaderUser } from '../components/home/HeaderUser'
+import { formatCurrency } from '../utils/formatCurrency'
 
 export function UserPackages() {
   const navigate = useNavigate()
@@ -449,8 +450,7 @@ export function UserPackages() {
             <div className="flex w-max flex-col gap-4">
               <div>
                 <h2 className="font-sans text-3xl font-bold text-gray-700">
-                  <span className="text-base font-normal">R$ </span>
-                  {packageValue}
+                  {formatCurrency(packageValue)}
                 </h2>
               </div>
               <div>
