@@ -80,14 +80,14 @@ export function HeaderUser() {
       </div>
       <div className="hidden items-center md:flex ">
         <a
-          href="#"
+          href="#vantagem"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
           aria-label="Botão para navegar até a página Vantagens"
         >
           Vantagens
         </a>
         <a
-          href="#"
+          href="#pacotes"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
           aria-label="Botão para navegar até a página Pacotes"
         >
@@ -101,7 +101,7 @@ export function HeaderUser() {
           Serviços
         </a>
         <a
-          href="#"
+          href="#contato"
           className="px-4 py-2 font-semibold text-gray-50 transition hover:text-blue-500"
           aria-label="Botão para navegar até a página Contatos"
         >

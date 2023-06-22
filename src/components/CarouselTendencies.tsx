@@ -64,7 +64,8 @@ export function CarouselTendencies() {
 
               // Cálculo da soma dos valores dos itinerários
               totalValue +=
-                parseFloat(String(valuePerPerson)) + dailyValue * numberOfDays
+                // @ts-ignore
+                parseFloat(valuePerPerson) + dailyValue * numberOfDays
             })
 
             return (
