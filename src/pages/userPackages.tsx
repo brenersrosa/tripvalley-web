@@ -368,7 +368,7 @@ export function UserPackages() {
                 </div>
               )}
 
-            {packageSelected.transferExclusive && (
+            {packageSelected.transferParticular && (
               <div className="flex flex-col gap-2">
                 <div>
                   <img
