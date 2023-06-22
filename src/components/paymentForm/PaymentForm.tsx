@@ -77,7 +77,7 @@ export function PaymentForm() {
   }, [id])
 
   return (
-    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-200 pt-5">
+    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-100 pt-5">
       <div className="mb-3  w-[15%]">
         <Button title="Voltar" onClick={() => navigate(-1)} />
       </div>
