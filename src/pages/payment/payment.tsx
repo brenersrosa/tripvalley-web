@@ -2,7 +2,7 @@ import { PaymentForm } from '../../components/paymentForm/PaymentForm'
 
 export function Payment() {
   return (
-    <div>
+    <div className="bg-gray-200">
       <PaymentForm />
     </div>
   )
