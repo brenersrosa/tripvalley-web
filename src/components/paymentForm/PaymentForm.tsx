@@ -76,10 +76,17 @@ export function PaymentForm() {
   }, [id])
 
   return (
-    <div className="my-auto flex h-max flex-col items-center justify-center bg-gray-200 pt-5">
-      <div className="mb-3  w-[15%]">
-        <Button title="Voltar" onClick={() => navigate(-1)} />
-      </div>
+    <div className="pt-28">
+      <nav className="fixed right-0 top-0 z-50 flex h-[40px] w-full  items-center justify-between border-b bg-black bg-opacity-60 px-5 text-gray-50 shadow-lg md:h-[90px] md:border-b-0 md:px-10 lg:px-40">
+        <div className="flex select-none items-center">
+          <a href="/" className="text-xl font-bold text-blue-500 md:text-4xl">
+            TRIP<span className="text-base text-white md:text-2xl">valley</span>
+          </a>
+        </div>
+        <div className="mb-3  w-[15%]">
+          <Button title="Voltar" onClick={() => navigate(-1)} />
+        </div>
+      </nav>
       {errorMessage && (
         <div className="mb-4 flex flex-col items-center gap-2 rounded-xl border-2 border-gray-300 bg-red-500 px-7 py-4 font-normal text-gray-50">
           <AlertDialog>{errorMessage}</AlertDialog>
@@ -91,23 +98,24 @@ export function PaymentForm() {
           </a>
         </div>
       )}
-      <div className="flex flex-row gap-3 rounded-lg border-2 bg-white shadow-md">
-        <div className="flex flex-col border-r-2 p-10 text-left">
-          <h1 className="mb-2 font-title text-2xl font-bold">
-            Detalhes do Pacote
-          </h1>
-          <div>
-            <img
-              className="max-w-[220px] rounded-lg object-cover shadow-lg brightness-95"
-              src={packageImage}
-              alt=""
-            />
+      <div className="mx-40 flex gap-3 border border-gray-200 bg-white shadow-md">
+        <div className="flex w-full flex-col text-left">
+          <div className="w-full">
+            <figure className="relative cursor-pointer shadow-lg grayscale filter transition-all duration-300 hover:grayscale-0">
+              <img
+                className="h-96 w-full"
+                src={packageImage}
+                alt="image description"
+              />
+
+              <figcaption className="absolute bottom-6 px-4 text-lg text-white">
+                <p>{packageDescription}</p>
+              </figcaption>
+            </figure>
           </div>
-          <div className="mt-4">
+          <div className="px-4 py-4">
             <h2 className="text-lg font-semibold">Nome do pacote</h2>
             <p className="text-gray-600">{packageName}</p>
-            <h2 className="mt-2 text-lg font-semibold">Descrição</h2>
-            <p className="max-w-xs text-gray-600">{packageDescription}</p>
             <h2 className="mt-2 text-lg font-semibold">
               Quantidade de adultos
             </h2>
@@ -118,49 +126,31 @@ export function PaymentForm() {
             <p className="max-w-xs text-gray-600">{children || '0'}</p>
             <h2 className="mt-2 text-lg font-semibold">Tipo de transfer</h2>
             <p className="max-w-xs text-gray-600">{transferType || '0'}</p>
+            <div className="mt-2">
+              <h2 className="text-lg font-semibold">Valor do pacote</h2>
+              <p className="text-gray-600">
+                {packageValue.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </p>
+            </div>
           </div>
-          <div className="mt-2">
-            <h2 className="text-lg font-semibold">Valor do pacote</h2>
-            <p className="text-gray-600">
-              {packageValue.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-            </p>
+          <div className="flex flex-col">
+            <StripeCheckout
+              token={handlePayment}
+              stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
+              amount={packageValue * 100} // Valor em centavos
+              image={packageImage}
+              description={packageDescription}
+              currency="BRL"
+              name={packageName}
+              label="Pagar com cartão de crédito"
+              locale="auto"
+              allowRememberMe={true}
+              panelLabel="Valor"
+            />
           </div>
-        </div>
-        <div className="flex flex-col items-start justify-start gap-5 p-10">
-          <h1 className="font-title text-2xl font-bold">
-            Métodos de pagamento
-          </h1>
-          <StripeCheckout
-            token={handlePayment}
-            stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
-            label="Pix"
-          />
-          <StripeCheckout
-            token={handlePayment}
-            stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
-            label="Boleto bancário"
-          />
-          <StripeCheckout
-            token={handlePayment}
-            stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
-            label="Pagar com cartão de débito"
-          />
-          <StripeCheckout
-            token={handlePayment}
-            stripeKey="pk_test_51NGtoNLHqsK9bBEOnuCdtIGQA5JKi5RxzVVs5WBV6XIfZstaCfQM5knbZJ47GA1oZn1L9S6b1cVQpcf2F9B5DXW000DvT9ZJOq"
-            amount={packageValue * 100} // Valor em centavos
-            image={packageImage}
-            description={packageDescription}
-            currency="BRL"
-            name={packageName}
-            label="Pagar com cartão de crédito"
-            locale="auto"
-            allowRememberMe={true}
-            panelLabel="Valor"
-          />
         </div>
       </div>
       <div className="mt-10 border-t-2 border-gray-300">
